@@ -10,17 +10,37 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <header class="sticky">
-            <Link to="/" class="logo">Logo</Link>
-            <Link to="/" class="button">Home</Link>
-            <Link to="/profile/" class="button">Profile</Link>
+          <header className="sticky">
+            <span className="header-11">
+              <Link to="/" className="logo">Logo</Link>
+              <Link to="/" className="button">Home</Link>
+              <Link to="/profile/" className="button">Profile</Link>
+            </span>
+            <div className="button header-1">Logout</div>
           </header>
 
-          <div class="container">
+          <div className="container">
             {/* Routes */}
             <Route exact path="/" component={Home} />
             <Route exact path="/profile/" component={Profile} />
           </div>
+
+          <footer>
+            <p>
+              Made with <i className="far fa-heart" title="love" aria-hidden></i><span className="sr-only">love</span> by students for students
+            </p>
+            <p><Link to="/about/">About</Link></p>
+            <p>
+              <a href="https://github.com/KentCompSoc/KentFlixClient/">
+                <i className="fab fa-github" title="GitHub link" aria-hidden></i>
+                <span className="sr-only">GitHub link</span>
+              </a>
+              <a href="https://www.facebook.com/groups/kentcomputingsociety/">
+                <i className="fab fa-facebook-square" title="Facebook link" aria-hidden></i>
+                <span className="sr-only">Facebook link</span>
+              </a>
+            </p>
+          </footer>
         </div>
       </Router>
     );
