@@ -1,5 +1,15 @@
+.form-header {
+  margin: 12px 0;
+}
 .btn-container {
   margin: 15px 0;
+}
+.btn-group {
+  margin: 8px 4px;
+}
+.btn-1 {
+  flex: 1 !important;
+  border: 0 !important;
 }
 mark {
   margin: 0 7px;
