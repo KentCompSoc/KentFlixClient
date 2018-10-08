@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import Home from './routes/Home';
 import Profile from './routes/Profile';
 import Login from './routes/Login';
+import Register from './routes/Register';
+// Components
 import Footer from './components/Footer';
 
 class App extends Component {
@@ -25,6 +27,7 @@ class App extends Component {
             {/* Routes */}
             <Route exact path="/" component={Home} />
             <Route exact path="/login/" component={Login} />
+            <Route exact path="/register/" component={Register} />
             <Route exact path="/profile/" component={Profile} />
           </div>
           <Footer />

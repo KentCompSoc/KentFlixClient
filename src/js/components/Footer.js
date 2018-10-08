@@ -78,7 +78,15 @@ class Footer extends Component {
           Made with <i className="far fa-heart" title="love" aria-hidden>
           </i> <span className="sr-only">love</span> by students for students
         </p>
-        <p><Link to="/about/">About</Link></p>
+        <div className="row">
+          <div className="col-sm-6">
+            <Link to="/about/">About</Link>
+          </div>
+          <div className="col-sm-6">
+            <p>Contact us</p>
+            <p>Report a bug</p>
+          </div>
+        </div>
         <form>
           <legend>Theme</legend>
           <div>
@@ -116,7 +124,10 @@ class Footer extends Component {
           </div>
         </form>
         <div className="button small">
-          <a href="https://github.com/KentCompSoc/KentFlixClient/">
+          <a
+            className="icon-link"
+            href="https://github.com/KentCompSoc/KentFlixClient/"
+          >
             <i
               className="fab fa-github"
               title="GitHub link"
@@ -126,7 +137,10 @@ class Footer extends Component {
           </a>
         </div>
         <div className="button small">
-          <a href="https://www.facebook.com/groups/kentcomputingsociety/">
+          <a
+            className="icon-link"
+            href="https://www.facebook.com/groups/kentcomputingsociety/"
+          >
             <i
               className="fab fa-facebook-square"
               title="Facebook link"
