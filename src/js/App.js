@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 // Routes
 import Home from './routes/Home';
 import Profile from './routes/Profile';
+import Login from './routes/Login';
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
           <div className="container">
             {/* Routes */}
             <Route exact path="/" component={Home} />
+            <Route exact path="/login/" component={Login} />
             <Route exact path="/profile/" component={Profile} />
           </div>
 
