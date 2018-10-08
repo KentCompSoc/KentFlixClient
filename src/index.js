@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './css/mini-dark.css';
 import App from './js/App';
 import * as serviceWorker from './serviceWorker';
 

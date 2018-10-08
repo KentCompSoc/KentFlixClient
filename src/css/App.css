@@ -10,7 +10,7 @@ header {
 .container {
   margin: 12px 0;
 }
-footer i {
-  color: white;
+footer div a {
+  color: inherit !important;
   margin: 4px;
 }
