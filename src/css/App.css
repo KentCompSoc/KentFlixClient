@@ -10,7 +10,7 @@ header {
 .container {
   margin: 12px 0;
 }
-footer div a {
+.icon-link {
   color: inherit !important;
   margin: 4px;
 }
