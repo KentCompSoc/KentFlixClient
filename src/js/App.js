@@ -29,18 +29,32 @@ class App extends Component {
 
           <footer>
             <p>
-              Made with <i className="far fa-heart" title="love" aria-hidden></i><span className="sr-only">love</span> by students for students
+              Made with <i className="far fa-heart" title="love" aria-hidden>
+              </i> <span className="sr-only">love</span> by students for
+              students
             </p>
             <p><Link to="/about/">About</Link></p>
             <p>
-              <a href="https://github.com/KentCompSoc/KentFlixClient/">
-                <i className="fab fa-github" title="GitHub link" aria-hidden></i>
-                <span className="sr-only">GitHub link</span>
-              </a>
-              <a href="https://www.facebook.com/groups/kentcomputingsociety/">
-                <i className="fab fa-facebook-square" title="Facebook link" aria-hidden></i>
-                <span className="sr-only">Facebook link</span>
-              </a>
+              <div className="button small">
+                <a href="https://github.com/KentCompSoc/KentFlixClient/">
+                  <i
+                    className="fab fa-github"
+                    title="GitHub link"
+                    aria-hidden
+                  ></i>
+                  <span className="sr-only">GitHub link</span>
+                </a>
+              </div>
+              <div className="button small">
+                <a href="https://www.facebook.com/groups/kentcomputingsociety/">
+                  <i
+                    className="fab fa-facebook-square"
+                    title="Facebook link"
+                    aria-hidden
+                  ></i>
+                  <span className="sr-only">Facebook link</span>
+                </a>
+              </div>
             </p>
           </footer>
         </div>
