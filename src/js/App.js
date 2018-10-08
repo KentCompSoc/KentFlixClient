@@ -34,28 +34,26 @@ class App extends Component {
               students
             </p>
             <p><Link to="/about/">About</Link></p>
-            <p>
-              <div className="button small">
-                <a href="https://github.com/KentCompSoc/KentFlixClient/">
-                  <i
-                    className="fab fa-github"
-                    title="GitHub link"
-                    aria-hidden
-                  ></i>
-                  <span className="sr-only">GitHub link</span>
-                </a>
-              </div>
-              <div className="button small">
-                <a href="https://www.facebook.com/groups/kentcomputingsociety/">
-                  <i
-                    className="fab fa-facebook-square"
-                    title="Facebook link"
-                    aria-hidden
-                  ></i>
-                  <span className="sr-only">Facebook link</span>
-                </a>
-              </div>
-            </p>
+            <div className="button small">
+              <a href="https://github.com/KentCompSoc/KentFlixClient/">
+                <i
+                  className="fab fa-github"
+                  title="GitHub link"
+                  aria-hidden
+                ></i>
+                <span className="sr-only">GitHub link</span>
+              </a>
+            </div>
+            <div className="button small">
+              <a href="https://www.facebook.com/groups/kentcomputingsociety/">
+                <i
+                  className="fab fa-facebook-square"
+                  title="Facebook link"
+                  aria-hidden
+                ></i>
+                <span className="sr-only">Facebook link</span>
+              </a>
+            </div>
           </footer>
         </div>
       </Router>
