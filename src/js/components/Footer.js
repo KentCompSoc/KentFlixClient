@@ -1,9 +1,66 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Contributors from './Contributors';
 
 class Footer extends Component {
   state = {
-    theme: "dark"
+    theme: "dark",
+    clientContributors: {
+      loading: true,
+      data: null,
+      error: null,
+    },
+    serverContributors: {
+      loading: true,
+      data: null,
+      error: null,
+    }
+  }
+
+  componentDidMount() {
+    // Client
+    fetch("https://api.github.com/repos/KentCompSoc/KentFlixClient/contributors?q=contributions&order=desc")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            clientContributors: {
+              loading: false,
+              data: result,
+            }
+          });
+        },
+        (error) => {
+          this.setState({
+            clientContributors: {
+              loading: false,
+              error: error,
+            }
+          });
+        }
+      )
+
+    // Server
+    fetch("https://api.github.com/repos/KentCompSoc/KentFlixServer/contributors?q=contributions&order=desc")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            serverContributors: {
+              loading: false,
+              data: result,
+            }
+          });
+        },
+        (error) => {
+          this.setState({
+            serverContributors: {
+              loading: false,
+              error: error,
+            }
+          });
+        }
+      )
   }
 
   changeSheet = sheetTheme => event => {
@@ -11,8 +68,10 @@ class Footer extends Component {
     sheet.href = sheet.href.replace(this.state.theme, sheetTheme);
     this.setState({ theme: sheetTheme });
   }
+
   render() {
-    const { theme } = this.state;
+    const { theme, clientContributors, serverContributors } = this.state;
+
     return (
       <footer>
         <p>
@@ -75,6 +134,14 @@ class Footer extends Component {
             ></i>
             <span className="sr-only">Facebook link</span>
           </a>
+        </div>
+        <hr />
+        <div className="row">
+          <p>Top contributors</p>
+        </div>
+        <div className="row">
+          <Contributors type="Client" contributors={clientContributors} />
+          <Contributors type="Server" contributors={serverContributors} />
         </div>
       </footer>
     )
