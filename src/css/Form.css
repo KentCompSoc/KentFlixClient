@@ -1,3 +1,27 @@
 .btn-container {
   margin: 15px 0;
 }
+mark {
+  margin: 0 7px;
+  animation: fadeIn 1s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.loading {
+  text-align: center;
+  animation: growIn 1s ease;
+}
+@keyframes growIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
