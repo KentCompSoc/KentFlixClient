@@ -8,6 +8,7 @@
       "author": "djb",
       "src": "https://player.kent.ac.uk/Panopto/Podcast/Syndication/43045886-be27-4285-a3af-a96500b6e27a.mp4",
       "duration": 2971,
+      "progress": 1321,
       "publish": "Mon, 24 Sep 2018 11: 05: 52 GMT"
     },
     {
@@ -15,6 +16,7 @@
       "author": "oc",
       "src": "https://player.kent.ac.uk/Panopto/Podcast/Syndication/53b8f943-b400-4300-9d71-a96800a70bcb.mp4",
       "duration": 3106,
+      "progress": 2321,
       "publish": "Thu, 27 Sep 2018 10: 08: 06 GMT"
     },
     {
@@ -22,6 +24,7 @@
       "author": "oc",
       "src": "https://player.kent.ac.uk/Panopto/Podcast/Syndication/209a8acd-a5db-4bee-ac01-a96900c729db.mp4",
       "duration": 3154,
+      "progress": 321,
       "publish": "Fri, 28 Sep 2018 12: 05: 07 GMT"
     },
     {
@@ -29,6 +32,7 @@
       "author": "oc",
       "src": "https://player.kent.ac.uk/Panopto/Podcast/Syndication/3d522f70-7e51-4731-800b-a96c00b6c585.mp4",
       "duration": 3188,
+      "progress": 3000,
       "publish": "Mon, 01 Oct 2018 11: 05: 26 GMT"
     },
     {
@@ -36,6 +40,7 @@
       "author": "oc",
       "src": "https://player.kent.ac.uk/Panopto/Podcast/Syndication/5ddc2088-d074-4e92-bd29-a96f00a65ea7.mp4",
       "duration": 2867,
+      "progress": 1321,
       "publish": "Thu, 04 Oct 2018 10: 05: 38 GM"
     },
     {
@@ -43,6 +48,7 @@
       "author": "oc",
       "src": "https://player.kent.ac.uk/Panopto/Podcast/Syndication/b54b2953-febe-418b-b034-a97000c7822b.mp4",
       "duration": 2717,
+      "progress": 1321,
       "publish": "Fri, 05 Oct 2018 12: 06: 22 GMT"
     },
     {
@@ -50,6 +56,7 @@
       "author": "rdl",
       "src": "https://player.kent.ac.uk/Panopto/Podcast/Syndication/d407ed6d-5bc7-471e-aa84-a97300b58518.mp4",
       "duration": 3371,
+      "progress": 1321,
       "publish": "Mon, 08 Oct 2018 11: 00: 54 GMT"
     }
   ]
