@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../css/Course.css";
 
 // Test videos
@@ -23,7 +24,7 @@ const Course = (props) => (
             <img
               src="image.png"
               className="section media"
-              alt={"Watch " + v.title + " video"}
+              alt={v.title + " video image"}
             />
             <progress
               className="video-progress"
@@ -35,7 +36,12 @@ const Course = (props) => (
               <small>{new Date(v.publish).toUTCString()}</small>
             </h4>
             <div className="button-group">
-              <button className="video-btn-1">View</button>
+              <Link
+                to={v.title.toLowerCase().replace(" ", "-").replace(/[^a-z-0-9]/g, "")}
+                className="button video-btn-1"
+              >
+                View
+              </Link>
               <button className="video-btn-1">Watch later</button>
             </div>
           </div>
