@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 // Routes
 import Home from './routes/Home';
 import Profile from './routes/Profile';
+import Course from './routes/Course';
 import Login from './routes/Login';
 import Register from './routes/Register';
 // Components
@@ -18,7 +19,7 @@ class App extends Component {
             <span className="header-11">
               <Link to="/" className="logo">Logo</Link>
               <Link to="/" className="button">Home</Link>
-              <Link to="/profile/" className="button">Profile</Link>
+              <Link to="/course/CO510/" className="button">Course</Link>
             </span>
             <div className="button header-1">Logout</div>
           </header>
@@ -26,6 +27,7 @@ class App extends Component {
           <div className="container">
             {/* Routes */}
             <Route exact path="/" component={Home} />
+            <Route exact path="/course/:uri/" component={Course} />
             <Route exact path="/login/" component={Login} />
             <Route exact path="/register/" component={Register} />
             <Route exact path="/profile/" component={Profile} />
