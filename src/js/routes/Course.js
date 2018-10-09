@@ -7,8 +7,8 @@ import videos from "../testVideos.json"
 
 class Course extends Component {
   render() {
-    const uri = this.props.match.params.uri;
-    if (uri !== "CO510") {
+    const { year, uri } = this.props.match.params;
+    if (year !== "2018" || uri !== "CO510") {
       return (
         <div className="row">
           <h3>

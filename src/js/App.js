@@ -19,7 +19,7 @@ class App extends Component {
             <span className="header-11">
               <Link to="/" className="logo">Logo</Link>
               <Link to="/" className="button">Home</Link>
-              <Link to="/course/CO510/" className="button">Course</Link>
+              <Link to="/2018/CO510/" className="button">Course</Link>
             </span>
             <div className="button header-1">Logout</div>
           </header>
@@ -27,7 +27,7 @@ class App extends Component {
           <div className="container">
             {/* Routes */}
             <Route exact path="/" component={Home} />
-            <Route exact path="/course/:uri/" component={Course} />
+            <Route exact path="/:year/:uri/" component={Course} />
             <Route exact path="/login/" component={Login} />
             <Route exact path="/register/" component={Register} />
             <Route exact path="/profile/" component={Profile} />
