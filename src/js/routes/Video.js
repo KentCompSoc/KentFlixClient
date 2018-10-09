@@ -6,8 +6,17 @@ import "../../css/Video.css";
 import videos from "../testVideos.json"
 
 class Video extends Component {
+	state = {
+		currentTime: 0,
+	}
+
+	updateCurrentTime = () => event => {
+		const currentTime = document.getElementById("video").currentTime;
+		this.setState({ currentTime });
+	}
 	render() {
 		const { year, course, video } = this.props.match.params;
+		const { currentTime } = this.state;
 		if (year !== "2018" || course !== "CO510") {
 			return (
 				<div className="row">
@@ -50,12 +59,17 @@ class Video extends Component {
 					</h3>
 				</div>
 				<div className="col-sm-12">
-					<video className="video-video" controls>
+					<video
+						className="video-video"
+						id="video"
+						onTimeUpdate={this.updateCurrentTime()}
+						controls
+					>
 						<source src={tempVideo.src} type="video/mp4" />
 					</video>
 					<progress
 						className="video-progress"
-						value={tempVideo.progress}
+						value={currentTime}
 						max={tempVideo.duration}
 					></progress>
 					<h4>
