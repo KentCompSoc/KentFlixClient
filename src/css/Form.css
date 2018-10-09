@@ -1,37 +1,37 @@
 .form-header {
-  margin: 12px 0;
+	margin: 12px 0;
 }
 .btn-container {
-  margin: 15px 0;
+	margin: 15px 0;
 }
 .btn-group {
-  margin: 8px 4px;
+	margin: 8px 4px;
 }
 .btn-1 {
-  flex: 1 !important;
-  border: 0 !important;
+	flex: 1 !important;
+	border: 0 !important;
 }
 mark {
-  margin: 0 7px;
-  animation: fadeIn 1s ease;
+	margin: 0 7px;
+	animation: fadeIn 1s ease;
 }
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 .loading {
-  text-align: center;
-  animation: growIn 1s ease;
+	text-align: center;
+	animation: growIn 1s ease;
 }
 @keyframes growIn {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
+	from {
+		transform: scale(0);
+	}
+	to {
+		transform: scale(1);
+	}
 }
