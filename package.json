@@ -11,7 +11,9 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"createDocs": "cleandir ./docs && jsdoc -R ./README.md -P ./package.json -r ./src/js/ -d ./docs",
+		"createDocs": "npm run deleteCurrentDocs && npm run createCurrentDocs",
+		"deleteCurrentDocs": "cleandir ./docs/kent-flix-client/ %process.env.npm_package_version% /",
+		"createCurrentDocs": "jsdoc -R ./README.md -P ./package.json -r ./src/js/ -d ./docs",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
