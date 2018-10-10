@@ -11,7 +11,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"createDocs": "cleandir ./docs && jsdoc -r ./src/js/ -d ./docs",
+		"createDocs": "cleandir ./docs && jsdoc -R ./README.md -P ./package.json -r ./src/js/ -d ./docs",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
