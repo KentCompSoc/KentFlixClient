@@ -1,21 +1,22 @@
-import React, { Component } from 'react';
-import '../css/App.css';
+import React, { Component } from "react";
+import "../css/App.css";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 // Routes
-import Home from './routes/Home';
-import Profile from './routes/Profile';
-import Course from './routes/Course';
-import Video from './routes/Video';
-import Login from './routes/Login';
-import Register from './routes/Register';
+import Home from "./routes/Home";
+import Profile from "./routes/Profile";
+import Course from "./routes/Course";
+import Video from "./routes/Video";
+import Login from "./routes/Login";
+import Register from "./routes/Register";
 // Components
-import Footer from './components/Footer';
+import Footer from "./components/Footer";
 
 class App extends Component {
 	render() {
 		return (
 			<Router>
-				<div>
+				<ScrollToTop>
 					<header className="sticky">
 						<span className="header-11">
 							<Link to="/" className="logo">Logo</Link>
@@ -35,7 +36,7 @@ class App extends Component {
 						<Route exact path="/profile/" component={Profile} />
 					</div>
 					<Footer />
-				</div>
+				</ScrollToTop>
 			</Router>
 		);
 	}

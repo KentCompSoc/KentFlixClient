@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: components/ScrollToTop.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,40 +17,36 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: components/ScrollToTop.js</h1>
 
     
 
 
 
     
-
-
-    <h3>kent-flix-client 0.1.0</h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>KentFlixClient</h1><p>An open source elegant solution to watching Kent University lecture recordings .</p>
-<h2>Installation</h2><p>Requires node &gt;= 6</p>
-<p>Install dependencies:</p>
-<pre class="prettyprint source"><code>npm install</code></pre><p>Then run the app locally:</p>
-<pre class="prettyprint source"><code>npm start</code></pre></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Component } from "react";
+import { withRouter } from "react-router-dom";
+
+/**
+ * Returns the browser to the top of the page.
+ */
+class ScrollToTop extends Component {
+	componentDidUpdate(prevProps) {
+		if (this.props.location !== prevProps.location) {
+			window.scrollTo(0, 0);
+		}
+	}
+
+	render() {
+		return this.props.children;
+	}
+}
+
+export default withRouter(ScrollToTop);</code></pre>
+        </article>
     </section>
-
-
 
 
 
