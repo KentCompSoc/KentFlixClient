@@ -1,4 +1,32 @@
-import React, { Component } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/NewCourse.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/NewCourse.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from "react";
 import '../../css/Form.css';
 
 /**
@@ -54,7 +82,7 @@ class NewCourse extends Component {
 				console.log(JSON.stringify(data));
 				// Redirect user to verify account
 				return (
-					<div>It worked</div>
+					&lt;div>It worked&lt;/div>
 				)
 			})
 			TODO: Process errors
@@ -76,7 +104,7 @@ class NewCourse extends Component {
 		const parsedRss = parser.parseFromString(rss, "text/xml");
 
 		// Check valid rss
-		if (parsedRss.getElementsByTagName("title").length === 0 &&
+		if (parsedRss.getElementsByTagName("title").length === 0 &amp;&amp;
 			parsedRss.getElementsByTagName("link").length === 0) {
 			return null;
 		}
@@ -92,7 +120,7 @@ class NewCourse extends Component {
 		const parsedLectures = parsedRss.getElementsByTagName("item");
 		// Gets all the lectures name
 		let lectures = [];
-		for (let i = 0; i < lectureCount; i++) {
+		for (let i = 0; i &lt; lectureCount; i++) {
 			// Create the lecture object
 			const lecture = {
 				name: parsedLectures[i].getElementsByTagName("title")[0].childNodes[0].nodeValue,
@@ -137,20 +165,20 @@ class NewCourse extends Component {
 	render() {
 		const { rss, course, loading } = this.state;
 		return (
-			<div className="row">
-				<div className="
+			&lt;div className="row">
+				&lt;div className="
 					col-sm-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3
 				">
-					<form onSubmit={this.submit()} autoComplete="on">
-						<legend><h1 className="form-header">Register a course</h1></legend>
-						<div className="input-group vertical">
-							<label htmlFor="rss">
+					&lt;form onSubmit={this.submit()} autoComplete="on">
+						&lt;legend>&lt;h1 className="form-header">Register a course&lt;/h1>&lt;/legend>
+						&lt;div className="input-group vertical">
+							&lt;label htmlFor="rss">
 								RSS feed
-								{ rss.error && (
-									<mark className="secondary">{rss.error}</mark>
+								{ rss.error &amp;&amp; (
+									&lt;mark className="secondary">{rss.error}&lt;/mark>
 								)}
-							</label>
-							<textarea
+							&lt;/label>
+							&lt;textarea
 								onChange={this.handleChange("rss")}
 								value={rss.value || ''}
 								type="text"
@@ -159,45 +187,68 @@ class NewCourse extends Component {
 								disabled={loading}
 								autoFocus
 							/>
-						</div>
-						<div className="btn-container">
-							{ loading && (
-								<div className="loading">
-									<div className="spinner primary"></div>
-								</div>
+						&lt;/div>
+						&lt;div className="btn-container">
+							{ loading &amp;&amp; (
+								&lt;div className="loading">
+									&lt;div className="spinner primary">&lt;/div>
+								&lt;/div>
 							)}
-							<div className="button-group btn-group">
-								<button
+							&lt;div className="button-group btn-group">
+								&lt;button
 									className="primary shadowed btn-1"
 									type="submit"
 									disabled={loading}
 								>
 									Register course
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div className="
+								&lt;/button>
+							&lt;/div>
+						&lt;/div>
+					&lt;/form>
+				&lt;/div>
+				&lt;div className="
 					col-sm-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3
 				">
-					{ course && (
-						<React.Fragment>
-							<h4>
+					{ course &amp;&amp; (
+						&lt;React.Fragment>
+							&lt;h4>
 								{course.name}
-								<small>Found {course.lectures.length} lectures</small>
-							</h4>	
-							<ul>
+								&lt;small>Found {course.lectures.length} lectures&lt;/small>
+							&lt;/h4>	
+							&lt;ul>
 								{ course.lectures.map(lecture => (
-									<li key={lecture.url}>{lecture.name}</li>
+									&lt;li key={lecture.url}>{lecture.name}&lt;/li>
 								))}
-							</ul>
-						</React.Fragment>
+							&lt;/ul>
+						&lt;/React.Fragment>
 					)}
-				</div>
-			</div>
+				&lt;/div>
+			&lt;/div>
 		)
 	}
 }
 
 export default NewCourse;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NewCourse.html">NewCourse</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Video.html">Video</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Oct 10 2018 21:49:27 GMT+0100 (GMT Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
