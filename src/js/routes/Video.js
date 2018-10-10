@@ -5,11 +5,17 @@ import "../../css/Video.css";
 // Test videos
 import videos from "../testVideos.json"
 
+/**
+ * Displays a video.
+ */
 class Video extends Component {
 	state = {
 		currentTime: 0,
 	}
 
+	/**
+	 * Updates the video play time.
+	 */
 	updateCurrentTime = () => event => {
 		const currentTime = document.getElementById("video").currentTime;
 		this.setState({ currentTime });
