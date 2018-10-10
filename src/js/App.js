@@ -5,6 +5,7 @@ import ScrollToTop from "./components/ScrollToTop";
 // Routes
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
+import NewCourse from "./routes/NewCourse";
 import Course from "./routes/Course";
 import Video from "./routes/Video";
 import Login from "./routes/Login";
@@ -29,6 +30,7 @@ class App extends Component {
 					<div className="container">
 						{/* Routes */}
 						<Route exact path="/" component={Home} />
+						<Route exact path="/new-course/" component={NewCourse} />
 						<Route exact path="/:year/:course/" component={Course} />
 						<Route exact path="/:year/:course/:video/" component={Video} />
 						<Route exact path="/login/" component={Login} />
