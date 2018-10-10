@@ -7,8 +7,8 @@ import videos from "../testVideos.json"
 
 class Course extends Component {
 	render() {
-		const { year, uri } = this.props.match.params;
-		if (year !== "2018" || uri !== "CO510") {
+		const { year, course } = this.props.match.params;
+		if (year !== "2018" || course !== "CO510") {
 			return (
 				<div className="row">
 					<h3>
@@ -64,7 +64,6 @@ class Course extends Component {
 							</div>
 						</div>
 					))}
-
 			</div>
 		)
 	}
