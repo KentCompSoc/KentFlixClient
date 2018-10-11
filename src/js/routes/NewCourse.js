@@ -191,34 +191,34 @@ class NewCourse extends Component {
 				</div>
 				<div className="col-sm-12">
 					{ course && (
-							<table className="striped">
-								<caption>
-									<h4>
-										{course.name}
-										<small>Found {course.lectures.length} lectures</small>
-									</h4>
-								</caption>
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Author</th>
-										<th>Published</th>
-										<th>Duration</th>
+						<table className="striped">
+							<caption>
+								<h4>
+									{course.name}
+									<small>Found {course.lectures.length} lectures</small>
+								</h4>
+							</caption>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Author</th>
+									<th>Published</th>
+									<th>Duration</th>
+								</tr>
+							</thead>
+							<tbody>
+								{course.lectures.map(lecture => (
+									<tr key={lecture.url}>
+										<td data-label="name">{lecture.name}</td>
+										<td data-label="author">{lecture.author}</td>
+										<td data-label="author">{lecture.published}</td>
+										<td data-label="author">{
+											this.humanTime(lecture.duration)
+										}</td>
 									</tr>
-								</thead>
-								<tbody>
-									{course.lectures.map(lecture => (
-										<tr key={lecture.url}>
-											<td data-label="name">{lecture.name}</td>
-											<td data-label="author">{lecture.author}</td>
-											<td data-label="author">{lecture.published}</td>
-											<td data-label="author">{
-												this.humanTime(lecture.duration)
-											}</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
+								))}
+							</tbody>
+						</table>
 					)}
 				</div>
 			</div>
