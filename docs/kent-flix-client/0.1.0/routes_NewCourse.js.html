@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/NewCourse.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/NewCourse.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from "react";
+import '../../css/Form.css';
+
+/**
+ * A form to submit a new course rss which is converted into json data and
+ * submitted to the server.
+ */
+class NewCourse extends Component {
+	state = {
+		rss: {
+			value: "",
+			error: "",
+		},
+		loading: false,
+		success: false
+	};
+
+	/**
+	 * Updates the value of a input as the user types inside it
+	 * @param {String} type Which input to update
+	 */
+	handleChange = type => event => {
+		this.setState({
+			[type]: { value: event.target.value }
+		});
+	};
+
+	/**
+	 * Handles form submission.
+	 */
+	submit = () => event => {
+		event.preventDefault();
+		const rss = this.state.rss.value;
+
+		if (!rss) {
+			this.setState({
+				rss: { error: "Please provide the RSS feed content" }
+			})
+			return;
+		}
+
+		const course = this.parseRss(rss);
+		if(!course) {
+			this.setState({ rss: { error: "Invalid RSS feed"} });
+			return;
+		}
+
+		/*
+		console.log("Submitting form...");
+		this.setState({ loading: true });
+
+		this.submitRSS({ feed: course })
+			.then(data => {
+				console.log(JSON.stringify(data));
+				// Redirect user to verify account
+				return (
+					&lt;div>It worked&lt;/div>
+				)
+			})
+			TODO: Process errors
+			.catch(error => {
+				console.error(error);
+				this.setState({ loading: false })
+			});
+		*/
+	}
+
+	/**
+	 * Parses the rss feed to a json object.
+	 * @param {String} rss The rss feed
+	 * @returns {json} A json object container the course name, course link and
+	 * lectures
+	 */
+	parseRss = (rss) => {
+		const parser = new DOMParser();
+		const parsedRss = parser.parseFromString(rss, "text/xml");
+
+		// Check valid rss
+		if (parsedRss.getElementsByTagName("title").length === 0 &amp;&amp;
+			parsedRss.getElementsByTagName("link").length === 0) {
+			return null;
+		}
+
+		// Gets the title and link of the course
+		let course = {
+			name: parsedRss.getElementsByTagName("title")[0].childNodes[0].nodeValue,
+			url: parsedRss.getElementsByTagName("link")[0].childNodes[0].nodeValue
+		}
+		// Gets the amount of lectures
+		const lectureCount = parsedRss.getElementsByTagName("item").length;
+		// Gets all the lectures
+		const parsedLectures = parsedRss.getElementsByTagName("item");
+		// Gets all the lectures name
+		let lectures = [];
+		for (let i = 0; i &lt; lectureCount; i++) {
+			// Create the lecture object
+			const lecture = {
+				name: parsedLectures[i].getElementsByTagName("title")[0].childNodes[0].nodeValue,
+				author: parsedLectures[i].getElementsByTagName("itunes:author")[0].childNodes[0].nodeValue,
+				summary: parsedLectures[i].getElementsByTagName("itunes:summary")[0].childNodes[0].nodeValue,
+				url: parsedLectures[i].getElementsByTagName("guid")[0].childNodes[0].nodeValue,
+				published: parsedLectures[i].getElementsByTagName("pubDate")[0].childNodes[0].nodeValue,
+				duration: parsedLectures[i].getElementsByTagName("itunes:duration")[0].childNodes[0].nodeValue
+			}
+			// Add the lecture to the lectures array
+			lectures = [...lectures, lecture];
+		}
+		course = { ...course, lectures };
+
+		this.setState({
+			course
+		})
+
+		return course;
+	}
+
+	/**
+	 * Uploads the rss feed to the database
+	 * @param {object} data The data to be uploaded
+	 * @returns {promise} Returns a promise from the request
+	 */
+	submitRSS = (data = {}) => {
+		return fetch("", {
+			method: "POST",
+			mode: "cors",
+			cache: "no-cache",
+			credentials: "same-origin",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+			},
+			redirect: "follow",
+			referrer: "no-referrer",
+			body: JSON.stringify(data),
+		}).then(response => response.json());
+	}
+
+	/**
+	 * Changes the time from seconds to a human friendly time
+	 * @param {String} duration The duration in seconds
+	 * @returns {String} A human readable time hh:mm:ss
+	 */
+	humanTime = (duration) => {
+		let humanTime = new Date(null);
+		humanTime.setSeconds(duration);
+		return humanTime.toISOString().substr(11, 8);
+	}
+
+	render() {
+		const { rss, course, loading } = this.state;
+		return (
+			&lt;div className="row">
+				&lt;div className="
+					col-sm-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3
+				">
+					&lt;form onSubmit={this.submit()} autoComplete="on">
+						&lt;legend>&lt;h1 className="form-header">Register a course&lt;/h1>&lt;/legend>
+						&lt;div className="input-group vertical">
+							&lt;label htmlFor="rss">
+								RSS feed
+								{ rss.error &amp;&amp; (
+									&lt;mark className="secondary">{rss.error}&lt;/mark>
+								)}
+							&lt;/label>
+							&lt;textarea
+								onChange={this.handleChange("rss")}
+								value={rss.value || ''}
+								type="text"
+								id="rss"
+								name="rss"
+								disabled={loading}
+								autoFocus
+							/>
+						&lt;/div>
+						&lt;div className="btn-container">
+							{ loading &amp;&amp; (
+								&lt;div className="loading">
+									&lt;div className="spinner primary">&lt;/div>
+								&lt;/div>
+							)}
+							&lt;div className="button-group btn-group">
+								&lt;button
+									className="primary shadowed btn-1"
+									type="submit"
+									disabled={loading}
+								>
+									Register course
+								&lt;/button>
+							&lt;/div>
+						&lt;/div>
+					&lt;/form>
+				&lt;/div>
+				&lt;div className="col-sm-12">
+					{ course &amp;&amp; (
+							&lt;table className="striped">
+								&lt;caption>
+									&lt;h4>
+										{course.name}
+										&lt;small>Found {course.lectures.length} lectures&lt;/small>
+									&lt;/h4>
+								&lt;/caption>
+								&lt;thead>
+									&lt;tr>
+										&lt;th>Name&lt;/th>
+										&lt;th>Author&lt;/th>
+										&lt;th>Published&lt;/th>
+										&lt;th>Duration&lt;/th>
+									&lt;/tr>
+								&lt;/thead>
+								&lt;tbody>
+									{course.lectures.map(lecture => (
+										&lt;tr key={lecture.url}>
+											&lt;td data-label="name">{lecture.name}&lt;/td>
+											&lt;td data-label="author">{lecture.author}&lt;/td>
+											&lt;td data-label="author">{lecture.published}&lt;/td>
+											&lt;td data-label="author">{
+												this.humanTime(lecture.duration)
+											}&lt;/td>
+										&lt;/tr>
+									))}
+								&lt;/tbody>
+							&lt;/table>
+					)}
+				&lt;/div>
+			&lt;/div>
+		)
+	}
+}
+
+export default NewCourse;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NewCourse.html">NewCourse</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Video.html">Video</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
