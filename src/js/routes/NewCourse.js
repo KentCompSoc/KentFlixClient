@@ -134,6 +134,17 @@ class NewCourse extends Component {
 		}).then(response => response.json());
 	}
 
+	/**
+	 * Changes the time from seconds to a human friendly time
+	 * @param {String} duration The duration in seconds
+	 * @returns {String} A human readable time hh:mm:ss
+	 */
+	humanTime = (duration) => {
+		let humanTime = new Date(null);
+		humanTime.setSeconds(duration);
+		return humanTime.toISOString().substr(11, 8);
+	}
+
 	render() {
 		const { rss, course, loading } = this.state;
 		return (
@@ -178,21 +189,36 @@ class NewCourse extends Component {
 						</div>
 					</form>
 				</div>
-				<div className="
-					col-sm-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3
-				">
+				<div className="col-sm-12">
 					{ course && (
-						<React.Fragment>
-							<h4>
-								{course.name}
-								<small>Found {course.lectures.length} lectures</small>
-							</h4>	
-							<ul>
-								{ course.lectures.map(lecture => (
-									<li key={lecture.url}>{lecture.name}</li>
-								))}
-							</ul>
-						</React.Fragment>
+							<table className="striped">
+								<caption>
+									<h4>
+										{course.name}
+										<small>Found {course.lectures.length} lectures</small>
+									</h4>
+								</caption>
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Author</th>
+										<th>Published</th>
+										<th>Duration</th>
+									</tr>
+								</thead>
+								<tbody>
+									{course.lectures.map(lecture => (
+										<tr key={lecture.url}>
+											<td data-label="name">{lecture.name}</td>
+											<td data-label="author">{lecture.author}</td>
+											<td data-label="author">{lecture.published}</td>
+											<td data-label="author">{
+												this.humanTime(lecture.duration)
+											}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
 					)}
 				</div>
 			</div>
