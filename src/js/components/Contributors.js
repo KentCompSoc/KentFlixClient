@@ -26,17 +26,19 @@ class Contributors extends Component {
 		return (
 			<div className="col-sm-6">
 				<p>{type} side:</p>
-				{contributors.data.map(user => (
-					<div key={user.id} className="col-sm-3 col-md-1">
-						<a href={user.html_url}>
-							<img
-								src={user.avatar_url}
-								className="rounded"
-								alt={user.login + "avatar"}
-							/>
-						</a>
-					</div>
-				))}
+				<div className="row">
+					{contributors.data.map(user => (
+						<div key={user.id} className="col-sm-3 col-md-1">
+							<a href={user.html_url}>
+								<img
+									src={user.avatar_url}
+									className="rounded"
+									alt={user.login + "avatar"}
+								/>
+							</a>
+						</div>
+					))}
+				</div>
 			</div>
 		)
 	}
