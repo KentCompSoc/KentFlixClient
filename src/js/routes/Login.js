@@ -60,7 +60,7 @@ class Login extends Component {
 				}
 
 				// Set token
-				localStorage.setItem("token", data.sessionID);
+				this.setToken(data.sessionID);
 				// Redirect user to dashboard
 				return (
 					<Redirect to={{

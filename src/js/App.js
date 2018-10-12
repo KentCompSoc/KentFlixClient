@@ -14,6 +14,23 @@ import Register from "./routes/Register";
 import Footer from "./components/Footer";
 
 class App extends Component {
+	state = {
+		token: null
+	}
+
+	componentDidMount() {
+		this.setState({ token: localStorage.getItem("token") });
+	}
+
+	setToken = token => {
+		this.setState({ token });
+		localStorage.setItem("token", token);
+	}
+
+	clearToken = token => {
+		this.setState({ token });
+		localStorage.removeItem("token");
+	}
 	render() {
 		return (
 			<Router>
@@ -33,7 +50,9 @@ class App extends Component {
 						<Route exact path="/new-course/" component={NewCourse} />
 						<Route exact path="/:year/:course/" component={Course} />
 						<Route exact path="/:year/:course/:video/" component={Video} />
-						<Route exact path="/login/" component={Login} />
+						<Route exact path="/login/" render={props =>
+							<Login {...props} setToken={this.setToken} />
+						} />
 						<Route exact path="/register/" component={Register} />
 						<Route exact path="/profile/" component={Profile} />
 					</div>
