@@ -19,19 +19,22 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({ token: localStorage.getItem("token") });
+		//this.setState({ token: localStorage.getItem("token") });
 	}
 
 	setToken = token => {
 		this.setState({ token });
 		localStorage.setItem("token", token);
+		console.log("Logged in user");
 	}
 
-	clearToken = token => {
-		this.setState({ token });
+	clearToken = () => {
+		this.setState({ token: null });
 		localStorage.removeItem("token");
+		console.log("Logged out user");
 	}
 	render() {
+		const { token } = this.state;
 		return (
 			<Router>
 				<ScrollToTop>
@@ -41,7 +44,13 @@ class App extends Component {
 							<Link to="/" className="button">Home</Link>
 							<Link to="/2018/CO510/" className="button">Course</Link>
 						</span>
-						<div className="button header-1">Logout</div>
+						{token ? (
+							<div className="button header-1" onClick={this.clearToken}>
+								Logout
+							</div>
+						) : (
+								<Link to="/login/" className="button header-1">Login</Link>
+							)}
 					</header>
 
 					<div className="container">
