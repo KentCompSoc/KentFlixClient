@@ -19,7 +19,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		//this.setState({ token: localStorage.getItem("token") });
+		this.setState({ token: localStorage.getItem("token") });
 	}
 
 	setToken = token => {
