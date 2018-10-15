@@ -2,13 +2,50 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../../css/Course.css";
 
-// Test videos
-import videos from "../testVideos.json"
-
 class Course extends Component {
+	state = {
+		course: null,
+		loading: true,
+		error: false,
+	}
+
+	componentDidMount() {
+		const { course } = this.props.match.params;
+		this.getCourse(course).then(data => {
+			// FIXME: API needs to respond with 400 error
+			if(data.error) {
+				this.setState({ error: data.error, loading: false })
+				return;
+			}
+			this.setState({ course: data.result, loading: false })
+		}).catch(error => {
+			console.error(error);
+			this.setState({ error, loading: false })
+		})
+	}
+
+	/**
+	 * Gets the course
+	 * @param {string} courseID The course id
+	 * @returns {promise} Returns a promise from the request
+	 */
+	getCourse = (courseID) => {
+		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/courses/"+courseID, {
+			method: "GET",
+			mode: "cors",
+			cache: "default",
+			credentials: "same-origin",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+			},
+			redirect: "follow",
+			referrer: "no-referrer",
+		}).then(response => response.json());
+	}
+
 	render() {
-		const { year, course } = this.props.match.params;
-		if (year !== "2018" || course !== "CO510") {
+		const { loading, course, error } = this.state; 
+		if (error) {
 			return (
 				<div className="row">
 					<h3>
@@ -20,20 +57,26 @@ class Course extends Component {
 				</div>
 			)
 		}
+
+		if(loading) {
+			return (
+				<div className="loading">
+					<div className="spinner primary"></div>
+				</div>
+			)
+		}
+
 		return (
 			<div className="row">
 				<div className="col-sm-12">
-					<img src={videos.image} alt={videos.title + " course image"} />
-				</div>
-				<div className="col-sm-12">
 					<h3>
-						{videos.title}
-						<small>{videos.video.length} videos available to watch</small>
+						{course.title}
+						<small>{course.lectures.length} videos available to watch</small>
 					</h3>
 				</div>
-				{videos.video.sort((x, y) => new Date(y.publish) - new Date(x.publish))
+				{course.lectures.sort((x, y) => new Date(y.date) - new Date(x.date))
 					.map(v => (
-						<div className="col-sm-12 col-md-4 col-lg-3" key={v.publish}>
+						<div className="col-sm-12 col-md-4 col-lg-3" key={v.id}>
 							<div className="card fluid">
 								<img
 									src="image.png"
@@ -42,19 +85,20 @@ class Course extends Component {
 								/>
 								<progress
 									className="video-progress"
-									value={v.progress}
-									max={v.duration}
+									value={v.progress || 0}
+									max={v.videoLength}
 								></progress>
 								<h4>
 									{v.title} - {v.author}
-									<small>{new Date(v.publish).toUTCString()}</small>
+									<small>{new Date(v.date).toUTCString()}</small>
 								</h4>
 								<div className="button-group">
 									<Link
-										to={
-											v.title.toLowerCase().replace(" ", "-")
-												.replace(/[^a-z-0-9]/g, "")
-										}
+										to={{
+											pathname: v.id.toLowerCase().replace(" ", "-")
+												.replace(/[^a-z-0-9]/g, ""),
+											state: { video: v }
+										}}
 										className="button video-btn-1"
 									>
 										View
