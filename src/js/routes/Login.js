@@ -29,6 +29,7 @@ class Login extends Component {
 		const password = this.state.password.value;
 
 		event.preventDefault();
+		this.setState({ error: null })
 		if(!kentID) {
 			this.setState({
 				kentID: { message: "Please provide a KentID" }
@@ -60,7 +61,7 @@ class Login extends Component {
 				}
 
 				// Set token
-				this.setToken(data.sessionID);
+				this.props.setToken(data.sessionID);
 				// Redirect user to dashboard
 				return (
 					<Redirect to={{
