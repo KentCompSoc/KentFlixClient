@@ -27,7 +27,8 @@ class Contributors extends Component {
 			<div className="col-sm-6">
 				<p>{type} side:</p>
 				<div className="row">
-					{contributors.data.map(user => (
+				{ contributors.data.length > 0 ? (
+					contributors.data.map(user => (
 						<div key={user.id} className="col-sm-3 col-md-1">
 							<a href={user.html_url}>
 								<img
@@ -37,7 +38,10 @@ class Contributors extends Component {
 								/>
 							</a>
 						</div>
-					))}
+					))
+				) : (
+					<p>Couldn't get contributors</p>
+				)}
 				</div>
 			</div>
 		)
