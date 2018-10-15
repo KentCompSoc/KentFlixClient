@@ -13,6 +13,7 @@ class Register extends Component {
 			error: '',
 		},
 		loading: false,
+		error: ''
 	};
 
 	handleChange = type => event => {
@@ -46,19 +47,13 @@ class Register extends Component {
 
 			this.registerUser({ email: kentID, password })
 				.then(data => {
-					console.log(JSON.stringify(data));
 					// Redirect user to verify account
-					return (
-						<Redirect to={{
-							path: "/verify/",
-							state: { email: kentID }
-						}} />
-					)
+					this.setState({ redirect: kentID });
 				})
 				/* TODO: Process errors */
 				.catch(error => {
 					console.error(error);
-					this.setState({ loading: false })
+					this.setState({ loading: false, error })
 				});
 		}
 	}
@@ -79,7 +74,17 @@ class Register extends Component {
 	}
 
 	render() {
-		const { kentID, password, loading } = this.state;
+		const { kentID, password, loading, redirect, error } = this.state;
+
+		if(redirect) {
+			return (
+				<Redirect to={{
+					pathname: "/verify/",
+					state: { email: redirect }
+				}} />
+			)
+		}
+
 		return (
 			<div className="row">
 				<div className="
@@ -127,6 +132,9 @@ class Register extends Component {
 								<div className="loading">
 									<div className="spinner primary"></div>
 								</div>
+							)}
+							{ error && (
+								<mark className="secondary">{error}</mark>
 							)}
 							<div className="button-group btn-group">
 								<button
