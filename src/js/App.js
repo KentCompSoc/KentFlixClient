@@ -43,7 +43,6 @@ class App extends Component {
 						<span className="header-11">
 							<Link to="/" className="logo">Logo</Link>
 							<Link to="/" className="button">Home</Link>
-							<Link to="/2018/CO510/" className="button">Course</Link>
 						</span>
 						{token ? (
 							<div className="button header-1" onClick={this.clearToken}>
