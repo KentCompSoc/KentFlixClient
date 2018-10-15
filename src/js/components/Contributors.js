@@ -40,7 +40,7 @@ class Contributors extends Component {
 						</div>
 					))
 				) : (
-					<p>Couldn't get contributors</p>
+					<p>{contributors.data.message}</p>
 				)}
 				</div>
 			</div>
