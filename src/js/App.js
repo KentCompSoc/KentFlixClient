@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../css/App.css";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 // Routes
 import Home from "./routes/Home";
@@ -10,6 +10,7 @@ import Course from "./routes/Course";
 import Video from "./routes/Video";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
+import NotFound from "./routes/NotFound";
 // Components
 import PrivateRoute from "./components/PrivateRoute";
 import Footer from "./components/Footer";
@@ -55,15 +56,32 @@ class App extends Component {
 
 					<div className="container">
 						{/* Routes */}
-						<Route exact path="/" component={Home} />
-						<Route exact path="/new-course/" component={NewCourse} />
-						<Route exact path="/:year/:course/" component={Course} />
-						<Route exact path="/:year/:course/:video/" component={Video} />
-						<Route exact path="/login/" render={props =>
-							<Login {...props} setToken={this.setToken} token={Boolean(token)} />
-						} />
-						<Route exact path="/register/" component={Register} />
-						<PrivateRoute path="/profile/" component={Profile} token={token} />
+						<Switch>
+							<Route exact path="/" component={Home} />
+							<Route exact path="/new-course/" component={NewCourse} />
+							<Route exact path="/:year/:course/" component={Course} />
+							<Route exact path="/:year/:course/:video/" component={Video} />
+							<Route exact path="/login/" render={props =>
+								<Login
+									{...props}
+									setToken={this.setToken} 
+									token={Boolean(token)}
+								/>
+							} />
+							<Route exact path="/register/" component={Register} />
+							<PrivateRoute
+								path="/profile/"
+								component={Profile}
+								token={token}
+							/>
+							<Route
+								path="/report-bug/"
+								component={() => window.location = 
+									"https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
+								}
+							/>
+							<Route component={NotFound} />
+						</Switch>
 					</div>
 					<Footer />
 				</ScrollToTop>

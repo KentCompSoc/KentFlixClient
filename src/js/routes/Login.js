@@ -60,6 +60,7 @@ class Login extends Component {
 					return;
 				}
 
+				console.log(data.sessionID)
 				// Set token
 				this.props.setToken(data.sessionID);
 				// Redirect user to dashboard
