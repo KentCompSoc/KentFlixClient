@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import '../../css/Form.css';
 
 class Register extends Component {
@@ -12,10 +12,8 @@ class Register extends Component {
 			value: '',
 			error: '',
 		},
-		message: null,
-		fail: false,
 		loading: false,
-		success: false
+		error: ''
 	};
 
 	handleChange = type => event => {
@@ -25,25 +23,68 @@ class Register extends Component {
 	};
 
 	submit = () => event => {
+		let kentID = this.state.kentID.value;
+		const password = this.state.password.value;
+
 		event.preventDefault();
-		if(!this.state.kentID.value) {
+		if(!kentID) {
 			this.setState({
 				kentID: { error: "Please provide a KentID" }
 			})
 		}
-		if(!this.state.password.value) {
+		if(!password) {
 			this.setState({
 				password: { error: "Please provide a password" }
 			})
 		}
-
-		if(this.state.kentID.value && this.state.password.value) {
+		if(!kentID.includes("@kent.ac.uk")){
+			kentID += "@kent.ac.uk";
+			console.log("Add email extension")
+		}
+		if(kentID && password) {
 			console.log("Submitting form...");
-			this.setState({ loading: true })
+			this.setState({ loading: true });
+
+			this.registerUser({ email: kentID, password })
+				.then(data => {
+					// Redirect user to verify account
+					this.setState({ redirect: kentID });
+				})
+				/* TODO: Process errors */
+				.catch(error => {
+					console.error(error);
+					this.setState({ loading: false, error })
+				});
 		}
 	}
+	
+	registerUser = (data = {}) => {
+		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/signup", {
+			method: "POST",
+			mode: "cors",
+			cache: "no-cache",
+			credentials: "same-origin",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+			},
+			redirect: "follow",
+			referrer: "no-referrer",
+			body: JSON.stringify(data),
+		}).then(response => response.json());
+	}
+
 	render() {
-		const { kentID, password, loading } = this.state;
+		const { kentID, password, loading, redirect, error } = this.state;
+
+		if(redirect) {
+			return (
+				<Redirect to={{
+					pathname: "/verify/",
+					state: { email: redirect }
+				}} />
+			)
+		}
+
 		return (
 			<div className="row">
 				<div className="
@@ -91,6 +132,9 @@ class Register extends Component {
 								<div className="loading">
 									<div className="spinner primary"></div>
 								</div>
+							)}
+							{ error && (
+								<mark className="secondary">{error}</mark>
 							)}
 							<div className="button-group btn-group">
 								<button
