@@ -51,7 +51,7 @@ class Course extends Component {
 					<h3>
 						Couldn't find that course
 						<small>
-							Why not <Link to="/submit-a-course/">submit</Link> the course?
+							Why not <Link to="/new-course/">submit</Link> the course?
 						</small>
 					</h3>
 				</div>
