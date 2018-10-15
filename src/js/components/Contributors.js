@@ -18,7 +18,7 @@ class Contributors extends Component {
 			return (
 				<div className="col-sm-6">
 					<p>{type} side:</p>
-					<p>{contributors.error}</p>
+					<p>Couldn't fetch {type.toLowerCase()} contributors</p>
 				</div>
 			)
 		}

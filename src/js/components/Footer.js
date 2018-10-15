@@ -21,46 +21,42 @@ class Footer extends Component {
 		// Client
 		fetch("https://api.github.com/repos/KentCompSoc/KentFlixClient/contributors?q=contributions&order=desc")
 			.then(res => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						clientContributors: {
-							loading: false,
-							data: result,
-						}
-					});
-				},
-				(error) => {
-					this.setState({
-						clientContributors: {
-							loading: false,
-							error: error,
-						}
-					});
-				}
-			)
+			.then(result => {
+				this.setState({
+					clientContributors: {
+						loading: false,
+						data: result,
+					}
+				});
+			})
+			.catch(error => {
+				this.setState({
+					clientContributors: {
+						loading: false,
+						error,
+					}
+				});
+			})
 
 		// Server
 		fetch("https://api.github.com/repos/KentCompSoc/KentFlixServer/contributors?q=contributions&order=desc")
 			.then(res => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						serverContributors: {
-							loading: false,
-							data: result,
-						}
-					});
-				},
-				(error) => {
-					this.setState({
-						serverContributors: {
-							loading: false,
-							error: error,
-						}
-					});
-				}
-			)
+			.then(result => {
+				this.setState({
+					serverContributors: {
+						loading: false,
+						data: result,
+					}
+				});
+			})
+			.catch(error => {
+				this.setState({
+					serverContributors: {
+						loading: false,
+						error,
+					}
+				});
+			})
 	}
 
 	changeSheet = sheetTheme => event => {
