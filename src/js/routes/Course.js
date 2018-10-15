@@ -78,11 +78,13 @@ class Course extends Component {
 					.map(v => (
 						<div className="col-sm-12 col-md-4 col-lg-3" key={v.id}>
 							<div className="card fluid">
-								<img
-									src="image.png"
-									className="section media"
-									alt={v.title + " video image"}
-								/>
+								<video className="section" alt={v.title + " video image"} >
+									<source
+										className="media"
+										src={v.videoURL + "#0.1"}
+										type="video/mp4"
+									/>
+								</video>
 								<progress
 									className="video-progress"
 									value={v.progress || 0}
@@ -97,13 +99,13 @@ class Course extends Component {
 										to={{
 											pathname: v.id.toLowerCase().replace(" ", "-")
 												.replace(/[^a-z-0-9]/g, ""),
-											state: { video: v }
+											state: v
 										}}
 										className="button video-btn-1"
 									>
 										View
 									</Link>
-									<button className="video-btn-1">Watch later</button>
+									<button className="video-btn-1" disabled>Watch later</button>
 								</div>
 							</div>
 						</div>
