@@ -97,7 +97,13 @@ class Login extends Component {
 	}
 
 	render() {
+		const { from } = this.props.location.state || { from: { pathname: "/" } };
 		const { kentID, password, loading, error } = this.state;
+		const { token } = this.props;
+
+		if (token) {
+			return <Redirect to={from} />;
+		}
 		return (
 			<div className="row">
 				<div className="

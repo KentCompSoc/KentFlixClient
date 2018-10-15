@@ -11,6 +11,7 @@ import Video from "./routes/Video";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 // Components
+import PrivateRoute from "./components/PrivateRoute";
 import Footer from "./components/Footer";
 
 class App extends Component {
@@ -60,10 +61,10 @@ class App extends Component {
 						<Route exact path="/:year/:course/" component={Course} />
 						<Route exact path="/:year/:course/:video/" component={Video} />
 						<Route exact path="/login/" render={props =>
-							<Login {...props} setToken={this.setToken} />
+							<Login {...props} setToken={this.setToken} token={Boolean(token)} />
 						} />
 						<Route exact path="/register/" component={Register} />
-						<Route exact path="/profile/" component={Profile} />
+						<PrivateRoute path="/profile/" component={Profile} token={token} />
 					</div>
 					<Footer />
 				</ScrollToTop>
