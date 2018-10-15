@@ -78,7 +78,7 @@ class Login extends Component {
 	}
 
 	/**
-	 * Uploads the rss feed to the database
+	 * Sends a login request
 	 * @param {object} data The data to be uploaded
 	 * @returns {promise} Returns a promise from the request
 	 */
