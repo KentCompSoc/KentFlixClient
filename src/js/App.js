@@ -6,6 +6,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
 import NewCourse from "./routes/NewCourse";
+import NewSchool from "./routes/NewSchool";
 import Course from "./routes/Course";
 import Video from "./routes/Video";
 import Login from "./routes/Login";
@@ -55,6 +56,7 @@ class App extends Component {
 						<Switch>
 							<Route exact path="/" component={Home} />
 							<Route exact path="/new-course/" component={NewCourse} />
+							<Route exact path="/new-school/" component={NewSchool} />
 							<Route exact path="/:year/:course/" component={Course} />
 							<Route exact path="/:year/:course/:video/" component={Video} />
 							<Route exact path="/login/" render={props =>

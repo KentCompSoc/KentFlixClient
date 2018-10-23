@@ -28,6 +28,7 @@ class Home extends Component {
 	 * @returns {promise} Returns a promise from the request
 	 */
 	getSchools = () => {
+		// FIXME: Returns a 404 error
 		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/schools", {
 			method: "GET",
 			mode: "cors",
