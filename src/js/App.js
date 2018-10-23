@@ -17,11 +17,7 @@ import Footer from "./components/Footer";
 
 class App extends Component {
 	state = {
-		token: null
-	}
-
-	componentDidMount() {
-		this.setState({ token: localStorage.getItem("token") });
+		token: localStorage.getItem("token")
 	}
 
 	setToken = token => {
@@ -50,8 +46,8 @@ class App extends Component {
 								Logout
 							</div>
 						) : (
-								<Link to="/login/" className="button header-1">Login</Link>
-							)}
+							<Link to="/login/" className="button header-1">Login</Link>
+						)}
 					</header>
 
 					<div className="container">
