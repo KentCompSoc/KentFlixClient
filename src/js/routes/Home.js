@@ -24,8 +24,7 @@ class Home extends Component {
 	}
 
 	/**
-	 * Gets the course
-	 * @param {string} courseID The course id
+	 * Gets the schools
 	 * @returns {promise} Returns a promise from the request
 	 */
 	getSchools = () => {
