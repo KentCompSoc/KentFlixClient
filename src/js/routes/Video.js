@@ -2,15 +2,24 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../../css/Video.css";
 
-// Test videos
-import videos from "../testVideos.json"
-
 /**
  * Displays a video.
  */
 class Video extends Component {
 	state = {
 		currentTime: 0,
+		video: null,
+		loading: true,
+	}
+
+	componentDidMount() {
+		// TODO: Get video via API
+
+		if(this.props.location.state) {
+			this.setState({ video: this.props.location.state, loading: false })
+		} else {
+			this.setState({ error: true, loading: false })
+		}
 	}
 
 	/**
@@ -21,9 +30,18 @@ class Video extends Component {
 		this.setState({ currentTime });
 	}
 	render() {
-		const { year, course, video } = this.props.match.params;
-		const { currentTime } = this.state;
-		if (year !== "2018" || course !== "CO510") {
+		//const { year, course, videoURI } = this.props.match.params;
+		const { currentTime, video, loading } = this.state;
+
+		if(loading) {
+			return (
+				<div className="loading">
+					<div className="spinner primary"></div>
+				</div>
+			)
+		}
+
+		/* if () {
 			return (
 				<div className="row">
 					<h3>
@@ -34,14 +52,9 @@ class Video extends Component {
 					</h3>
 				</div>
 			)
-		}
-
-		let tempVideo = videos.video.filter(v => {
-			return v.title.toLowerCase().replace(" ", "-")
-				.replace(/[^a-z-0-9]/g, "") === video;
-		})[0];
-
-		if (!tempVideo) {
+		} */
+	
+		/* if () {
 			return (
 				<div className="row">
 					<h3>
@@ -52,16 +65,14 @@ class Video extends Component {
 					</h3>
 				</div>
 			)
-		}
+		} */
+
 		return (
 			<div className="row">
 				<div className="col-sm-12">
-					<img src={videos.image} alt={videos.title + " course image"} />
-				</div>
-				<div className="col-sm-12">
 					<h3>
-						{videos.title}
-						<small>Back to <Link to="/">course</Link></small>
+						{video.title}
+						<small>Back to <Link to="./">course</Link></small>
 					</h3>
 				</div>
 				<div className="col-sm-12">
@@ -71,16 +82,16 @@ class Video extends Component {
 						onTimeUpdate={this.updateCurrentTime()}
 						controls
 					>
-						<source src={tempVideo.src} type="video/mp4" />
+						<source src={video.videoURL} type="video/mp4" />
 					</video>
 					<progress
 						className="video-progress"
 						value={currentTime}
-						max={tempVideo.duration}
+						max={video.videoLength}
 					></progress>
 					<h4>
-						{tempVideo.title} - {tempVideo.author}
-						<small>{new Date(tempVideo.publish).toUTCString()}</small>
+						{video.title} - {video.author}
+						<small>{new Date(video.date).toUTCString()}</small>
 					</h4>
 				</div>
 			</div>

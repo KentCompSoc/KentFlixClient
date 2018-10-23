@@ -18,7 +18,7 @@ class Contributors extends Component {
 			return (
 				<div className="col-sm-6">
 					<p>{type} side:</p>
-					<p>{contributors.error}</p>
+					<p>Couldn't fetch {type.toLowerCase()} contributors</p>
 				</div>
 			)
 		}
@@ -26,17 +26,23 @@ class Contributors extends Component {
 		return (
 			<div className="col-sm-6">
 				<p>{type} side:</p>
-				{contributors.data.map(user => (
-					<div key={user.id} className="col-sm-3 col-md-1">
-						<a href={user.html_url}>
-							<img
-								src={user.avatar_url}
-								className="rounded"
-								alt={user.login + "avatar"}
-							/>
-						</a>
-					</div>
-				))}
+				<div className="row">
+				{ contributors.data.length > 0 ? (
+					contributors.data.map(user => (
+						<div key={user.id} className="col-sm-3 col-md-1">
+							<a href={user.html_url}>
+								<img
+									src={user.avatar_url}
+									className="rounded"
+									alt={user.login + "avatar"}
+								/>
+							</a>
+						</div>
+					))
+				) : (
+					<p>{contributors.data.message}</p>
+				)}
+				</div>
 			</div>
 		)
 	}
