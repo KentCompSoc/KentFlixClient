@@ -219,34 +219,34 @@ class NewCourse extends Component {
 				&lt;/div>
 				&lt;div className="col-sm-12">
 					{ course &amp;&amp; (
-							&lt;table className="striped">
-								&lt;caption>
-									&lt;h4>
-										{course.name}
-										&lt;small>Found {course.lectures.length} lectures&lt;/small>
-									&lt;/h4>
-								&lt;/caption>
-								&lt;thead>
-									&lt;tr>
-										&lt;th>Name&lt;/th>
-										&lt;th>Author&lt;/th>
-										&lt;th>Published&lt;/th>
-										&lt;th>Duration&lt;/th>
+						&lt;table className="striped">
+							&lt;caption>
+								&lt;h4>
+									{course.name}
+									&lt;small>Found {course.lectures.length} lectures&lt;/small>
+								&lt;/h4>
+							&lt;/caption>
+							&lt;thead>
+								&lt;tr>
+									&lt;th>Name&lt;/th>
+									&lt;th>Author&lt;/th>
+									&lt;th>Published&lt;/th>
+									&lt;th>Duration&lt;/th>
+								&lt;/tr>
+							&lt;/thead>
+							&lt;tbody>
+								{course.lectures.map(lecture => (
+									&lt;tr key={lecture.url}>
+										&lt;td data-label="name">{lecture.name}&lt;/td>
+										&lt;td data-label="author">{lecture.author}&lt;/td>
+										&lt;td data-label="author">{lecture.published}&lt;/td>
+										&lt;td data-label="author">{
+											this.humanTime(lecture.duration)
+										}&lt;/td>
 									&lt;/tr>
-								&lt;/thead>
-								&lt;tbody>
-									{course.lectures.map(lecture => (
-										&lt;tr key={lecture.url}>
-											&lt;td data-label="name">{lecture.name}&lt;/td>
-											&lt;td data-label="author">{lecture.author}&lt;/td>
-											&lt;td data-label="author">{lecture.published}&lt;/td>
-											&lt;td data-label="author">{
-												this.humanTime(lecture.duration)
-											}&lt;/td>
-										&lt;/tr>
-									))}
-								&lt;/tbody>
-							&lt;/table>
+								))}
+							&lt;/tbody>
+						&lt;/table>
 					)}
 				&lt;/div>
 			&lt;/div>
