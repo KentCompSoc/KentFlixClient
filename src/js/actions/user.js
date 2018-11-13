@@ -11,14 +11,6 @@ const baseURL = "https://kentflix-7f510.firebaseapp.com/api/v1/";
 export function login({email, password}) {
 	const request = fetch(`${baseURL}login`, {
 		method: "POST",
-		mode: "cors",
-		cache: "no-cache",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json; charset=utf-8",
-		},
-		redirect: "follow",
-		referrer: "no-referrer",
 		body: JSON.stringify({ email, password }),
 	});
 
