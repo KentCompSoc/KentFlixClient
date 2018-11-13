@@ -52,10 +52,10 @@ class Login extends Component {
 			this.submitLogin({ email: kentID, password }).then(data => {
 				/* FIXME: Server should respond with error status */
 				if(data.error) {
-					console.error(data.infoMessage);
+					console.error(data.error.message);
 					this.setState({
 						loading: false,
-						error: data.infoMessage
+						error: data.error.message
 					})
 					return;
 				}
@@ -69,6 +69,12 @@ class Login extends Component {
 						path: "/dashboard/"
 					}} />
 				)
+			}).catch(error => {
+				console.error(error)
+				this.setState({
+					loading: false,
+					error: error
+				})
 			})
 				/* TODO: Process errors */
 				.catch(error => {
