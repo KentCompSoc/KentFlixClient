@@ -1,6 +1,9 @@
 import React from "react";
 import "../../css/App.css";
 import { Link } from "react-router-dom";
+//Redux
+import { connect } from "react-redux";
+import { clearToken } from "../actions/user";
 
 const Header = (props) => {
 	const { token, clearToken } = props;
@@ -21,4 +24,19 @@ const Header = (props) => {
 	)
 };
 
-export default Header;
+function mapStateToProps ({ user }) {
+	return {
+		token: Boolean(user.token)
+	}
+}
+
+function mapDispatchToProps (dispatch) {
+	return {
+		clearToken: (data) => dispatch(clearToken(data))
+	}
+}
+
+export default connect(
+	mapStateToProps,
+  mapDispatchToProps
+)(Header)
