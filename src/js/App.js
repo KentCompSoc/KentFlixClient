@@ -39,8 +39,8 @@ class App extends Component {
 				<ScrollToTop>
 					<header className="sticky">
 						<span className="header-11">
-							<Link to="/" className="logo">Logo</Link>
-							<Link to="/" className="button">Home</Link>
+							<Link to="/dashboard/" className="logo">Logo</Link>
+							<Link to="/dashboard/" className="button">Home</Link>
 						</span>
 						{token ? (
 							<div className="button header-1" onClick={this.clearToken}>
@@ -54,16 +54,45 @@ class App extends Component {
 					<div className="container">
 						{/* Routes */}
 						<Switch>
-							<Route exact path="/" component={Home} />
-							<Route exact path="/new-course/" component={NewCourse} />
-							<Route exact path="/course/:course/" render={props =>
-								<Course
-									{...props}
-									token={token}
-								/>
-							} />
-							<Route exact path="/course/:course/:video/" component={Video} />
-							<Route exact path="/new-school/" component={NewSchool} />
+							{/* Private routes */}
+							<PrivateRoute
+								path="/dashboard/"
+								exact
+								component={Home}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/course/:course/"
+								exact
+								component={Course}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/course/:course/:video/"
+								exact
+								component={Video}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/new-school/"
+								exact
+								component={NewSchool}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/new-course/"
+								exact
+								component={NewCourse}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/profile/"
+								exact
+								component={Profile}
+								token={token}
+							/>
+
+							{/* Public routes */}
 							<Route exact path="/login/" render={props =>
 								<Login
 									{...props}
@@ -72,13 +101,9 @@ class App extends Component {
 								/>
 							} />
 							<Route exact path="/register/" component={Register} />
-							<PrivateRoute
-								path="/profile/"
-								component={Profile}
-								token={token}
-							/>
 							<Route
 								path="/report-bug/"
+								exact
 								component={() => window.location =
 									"https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
 								}
