@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Displays the school modules and courses
+ * @param {string} school The school id
+ */
 class School extends Component {
 	state = {
 		school: null,
@@ -26,7 +30,7 @@ class School extends Component {
 	}
 
 	/**
-	 * Gets the school
+	 * Gets the school modules and courses
 	 * @param {string} schoolID The school id
 	 * @returns {promise} Returns a promise from the request
 	 */
