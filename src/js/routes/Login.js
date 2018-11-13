@@ -60,9 +60,8 @@ class Login extends Component {
 					return;
 				}
 
-				console.log(data.sessionID)
 				// Set token
-				this.props.setToken(data.sessionID);
+				this.props.setToken(data.payload.sessionID);
 				// Redirect user to dashboard
 				return (
 					<Redirect to={{
@@ -75,12 +74,7 @@ class Login extends Component {
 					loading: false,
 					error: error
 				})
-			})
-				/* TODO: Process errors */
-				.catch(error => {
-					console.error(error);
-					this.setState({ loading: false })
-				});
+			});
 		}
 	}
 
