@@ -6,6 +6,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
 import NewCourse from "./routes/NewCourse";
+import NewSchool from "./routes/NewSchool";
 import Course from "./routes/Course";
 import Video from "./routes/Video";
 import Login from "./routes/Login";
@@ -46,8 +47,8 @@ class App extends Component {
 								Logout
 							</div>
 						) : (
-								<Link to="/login/" className="button header-1">Login</Link>
-							)}
+							<Link to="/login/" className="button header-1">Login</Link>
+						)}
 					</header>
 
 					<div className="container">
@@ -62,6 +63,7 @@ class App extends Component {
 								/>
 							} />
 							<Route exact path="/course/:course/:video/" component={Video} />
+							<Route exact path="/new-school/" component={NewSchool} />
 							<Route exact path="/login/" render={props =>
 								<Login
 									{...props}
