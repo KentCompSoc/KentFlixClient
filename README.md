@@ -1,5 +1,9 @@
 # KentFlixClient
-An open source elegant solution to watching Kent University lecture recordings .
+An open source elegant solution to watching Kent University lecture recordings.
+
+## About
+Kent Flix Client is a progress web application using React.js on the frontend
+and interacting with a restful [api](https://github.com/KentCompSoc/KentFlixServer/).
 
 ## Installation
 Requires node >= 6
