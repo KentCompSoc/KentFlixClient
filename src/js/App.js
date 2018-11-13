@@ -7,6 +7,7 @@ import Home from "./routes/Home";
 import Profile from "./routes/Profile";
 import NewCourse from "./routes/NewCourse";
 import NewSchool from "./routes/NewSchool";
+import School from "./routes/School";
 import Course from "./routes/Course";
 import Video from "./routes/Video";
 import Login from "./routes/Login";
@@ -47,6 +48,12 @@ class App extends Component {
 								path="/dashboard/"
 								exact
 								component={Home}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/school/:school/"
+								exact
+								component={School}
 								token={token}
 							/>
 							<PrivateRoute
