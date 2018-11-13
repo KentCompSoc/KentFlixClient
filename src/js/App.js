@@ -56,13 +56,18 @@ class App extends Component {
 						<Switch>
 							<Route exact path="/" component={Home} />
 							<Route exact path="/new-course/" component={NewCourse} />
+							<Route exact path="/course/:course/" render={props =>
+								<Course
+									{...props}
+									token={token}
+								/>
+							} />
+							<Route exact path="/course/:course/:video/" component={Video} />
 							<Route exact path="/new-school/" component={NewSchool} />
-							<Route exact path="/:year/:course/" component={Course} />
-							<Route exact path="/:year/:course/:video/" component={Video} />
 							<Route exact path="/login/" render={props =>
 								<Login
 									{...props}
-									setToken={this.setToken} 
+									setToken={this.setToken}
 									token={Boolean(token)}
 								/>
 							} />
@@ -74,7 +79,7 @@ class App extends Component {
 							/>
 							<Route
 								path="/report-bug/"
-								component={() => window.location = 
+								component={() => window.location =
 									"https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
 								}
 							/>

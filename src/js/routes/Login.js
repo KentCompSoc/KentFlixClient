@@ -52,28 +52,29 @@ class Login extends Component {
 			this.submitLogin({ email: kentID, password }).then(data => {
 				/* FIXME: Server should respond with error status */
 				if(data.error) {
-					console.error(data.infoMessage);
+					console.error(data.error.message);
 					this.setState({
 						loading: false,
-						error: data.infoMessage
+						error: data.error.message
 					})
 					return;
 				}
 
 				// Set token
-				this.props.setToken(data.result.sessionID);
+				this.props.setToken(data.payload.sessionID);
 				// Redirect user to dashboard
 				return (
 					<Redirect to={{
 						path: "/dashboard/"
 					}} />
 				)
-			})
-				/* TODO: Process errors */
-				.catch(error => {
-					console.error(error);
-					this.setState({ loading: false })
-				});
+			}).catch(error => {
+				console.error(error)
+				this.setState({
+					loading: false,
+					error: error
+				})
+			});
 		}
 	}
 
