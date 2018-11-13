@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
 	<Route {...rest} render={props => rest.token ? (
-			<Component token={rest.token} {...props} />
+			<Component {...props} />
 		) : (
 			<Redirect
 				to={{
