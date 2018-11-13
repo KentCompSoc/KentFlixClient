@@ -12,4 +12,4 @@ Then run the app locally:
 	npm start
 
 ## Documentation
-All documentation can be found [on GitHub pages](https://kentcompsoc.github.io/KentFlixClient/kent-flix-client/index.html)
+All documentation can be found [on GitHub pages](https://kentcompsoc.github.io/KentFlixClient/kent-flix-client/)
