@@ -100,7 +100,7 @@ class Course extends Component {
 								<div className="button-group">
 									<Link
 										to={{
-											pathname: v.id.toLowerCase().replace(" ", "-")
+											pathname: "/course/"+course.courseID+ "/"+v.id.toLowerCase().replace(" ", "-")
 												.replace(/[^a-z-0-9]/g, ""),
 											state: v
 										}}
