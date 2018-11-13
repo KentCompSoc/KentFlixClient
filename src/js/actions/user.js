@@ -1,17 +1,60 @@
-export const SET_TOKEN = "SET_TOKEN";
+export const LOGIN = "LOGIN";
 export const CLEAR_TOKEN = "CLEAR_TOKEN";
 
+const baseURL = "https://kentflix-7f510.firebaseapp.com/api/v1/";
+
 /**
- * Sets the user token
- * @param {string} token The users token
+ * Logs the user in setting their token
+ * @param {string} email The users email
+ * @param {string} password The users password
  */
-export function setToken(token) {
+export function login({email, password}) {
+	const request = fetch(`${baseURL}login`, {
+		method: "POST",
+		mode: "cors",
+		cache: "no-cache",
+		credentials: "same-origin",
+		headers: {
+			"Content-Type": "application/json; charset=utf-8",
+		},
+		redirect: "follow",
+		referrer: "no-referrer",
+		body: JSON.stringify({ email, password }),
+	});
+
 	return dispatch => {
-		localStorage.setItem("token", token);
 		dispatch({
-			type: SET_TOKEN,
-			token
+			type: LOGIN,
+			error: null,
+			loading: true
 		})
+		request.then(response => response.json()).then(data => {
+			if(data.error) {
+				console.error(data.error.message);
+				dispatch({
+					type: LOGIN,
+					error: data.error.message,
+					loading: false
+				})
+			}
+
+			if(data.success) {
+				localStorage.setItem("token", data.payload.sessionID);
+				dispatch({
+					type: LOGIN,
+					token: data.payload.sessionID,
+					loading: false
+				})
+			}
+
+		}).catch(error => {
+			console.error(error);
+				dispatch({
+					type: LOGIN,
+					error,
+					loading: false
+				})
+		});
 	}
 }
 

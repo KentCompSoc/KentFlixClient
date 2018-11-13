@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+//Redux
+import { connect } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
 	<Route {...rest} render={props => rest.token ? (
@@ -15,4 +17,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 	/>
 );
 
-export default PrivateRoute;
+function mapStateToProps ({ user }) {
+	return {
+		token: Boolean(user.token)
+	}
+}
+
+export default connect(
+	mapStateToProps
+)(PrivateRoute)

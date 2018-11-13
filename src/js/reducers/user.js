@@ -1,5 +1,5 @@
 import {
-	SET_TOKEN,
+	LOGIN,
 	CLEAR_TOKEN
 } from "../actions/user";
 
@@ -9,10 +9,12 @@ const initialState = {
 
 function user(state = initialState, action){
 	switch (action.type){
-		case SET_TOKEN :
+		case LOGIN :
 			return {
 				...state,
-				token: action.token
+				token: action.token,
+				error: action.error,
+				loading: action.loading
 			}
 		case CLEAR_TOKEN :
 			return {
