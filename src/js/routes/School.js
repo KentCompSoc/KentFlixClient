@@ -71,48 +71,47 @@ class School extends Component {
 
 		return (
 			<div className="row">
-			{console.log(module)}
-			{console.log(course)}
 				<div className="col-sm-12">
-					<h3>
+					<h2>
 						{school}
-					</h3>
+					</h2>
 				</div>
-				<div className="col-sm-12">
-					<h4>Modules</h4>
-				</div>
-				<div className="col-sm-12">
-					<div className="row">
-						{module.map(m => (
-							<div className="col-sm-12 col-md-4 col-lg-3" key={m.id}>
-								<div className="card fluid">
-									<h4>
-										{m.name}
-									</h4>
+				<div className="collapse">
+					<input type="checkbox" id="modules" aria-hidden="true" />
+					<label htmlFor="modules" aria-hidden="true">Modules</label>
+					<div className="col-sm-12">
+						<div className="row">
+							{module.map(m => (
+								<div className="col-sm-12 col-md-4 col-lg-3" key={m.id}>
+									<h4>{m.name}</h4>
 								</div>
-							</div>
-						))}
+							))}
+						</div>
 					</div>
-				</div>
-				<div className="col-sm-12">
-					<h4>Courses</h4>
-				</div>
-				<div className="col-sm-12">
-					<div className="row">
-						{course.map(c => (
-							<a
-								className="col-sm-12 col-md-4 col-lg-3"
-								key={c.courseID}
-								href={"/course/"+c.courseID}
-							>
-								<div className="card fluid">
-									<h4>
-										{c.name}
-										<small>{c.lectures.length} recordings available</small>
-									</h4>
-								</div>
-							</a>
-						))}
+					<input
+						type="checkbox"
+						id="courses"
+						defaultChecked
+						aria-hidden="true"
+					/>
+					<label htmlFor="courses" aria-hidden="true">Courses</label>
+					<div className="col-sm-12">
+						<div className="row">
+							{course.map(c => (
+								<a
+									className="col-sm-12 col-md-4 col-lg-3"
+									key={c.courseID}
+									href={"/course/"+c.courseID}
+								>
+									<div className="card fluid">
+										<h4>
+											{c.courseID} - {c.name}
+											<small>{c.lectures.length} recordings available</small>
+										</h4>
+									</div>
+								</a>
+							))}
+						</div>
 					</div>
 				</div>
 			</div>
