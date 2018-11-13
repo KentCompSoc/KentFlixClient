@@ -102,10 +102,10 @@ class School extends Component {
 					<div className="col-sm-12">
 						<div className="row">
 							{course.map(c => (
-								<a
+								<Link
 									className="col-sm-12 col-md-4 col-lg-3"
 									key={c.courseID}
-									href={"/course/"+c.courseID}
+									to={"/course/"+c.courseID}
 								>
 									<div className="card fluid">
 										<h4>
@@ -113,7 +113,7 @@ class School extends Component {
 											<small>{c.lectures.length} recordings available</small>
 										</h4>
 									</div>
-								</a>
+								</Link>
 							))}
 						</div>
 					</div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import "../../css/Home.css";
 
 class Home extends Component {
@@ -61,7 +62,7 @@ class Home extends Component {
 						<div className="row">
 							{ schools.map(school => (
 								<div key={school.id} className="col-sm-6 col-lg-3">
-									<a href={"/school/"+school.id}>{school.name}</a>
+									<Link to={"/school/"+school.id}>{school.name}</Link>
 								</div>
 							))}
 						</div>

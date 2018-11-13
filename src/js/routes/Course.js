@@ -72,7 +72,7 @@ class Course extends Component {
 					<h3>
 						{course.courseID} - {course.name}
 						<small>
-							Back to <a href={"/school/" + course.schoolID}>school</a>
+							Back to <Link to={"/school/" + course.schoolID}>school</Link>
 						</small>
 						<small>{course.lectures.length} videos available to watch</small>
 					</h3>
