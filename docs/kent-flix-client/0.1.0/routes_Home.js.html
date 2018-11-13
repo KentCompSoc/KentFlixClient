@@ -38,16 +38,15 @@ class Home extends Component {
 
 	componentDidMount() {
 		this.getSchools().then(data => {
-			// FIXME: API needs to respond with 400 error
 			if(data.error) {
-				this.setState({ error: data.infoMessage, loading: false })
-				console.error(data.infoMessage);
+				this.setState({ error: data.message, loading: false })
+				console.error(data.message);
 				return;
 			}
-			this.setState({ schools: data.result, loading: false })
+			this.setState({ schools: data.payload, loading: false })
 		}).catch(error => {
 			console.error(error);
-			this.setState({ error, loading: false })
+			this.setState({ error: error.message, loading: false })
 		})
 	}
 
@@ -56,7 +55,7 @@ class Home extends Component {
 	 * @returns {promise} Returns a promise from the request
 	 */
 	getSchools = () => {
-		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/schools", {
+		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/"+this.props.token+"/schools", {
 			method: "GET",
 			mode: "cors",
 			cache: "default",
@@ -86,8 +85,14 @@ class Home extends Component {
 				))}
 
 				{( schools &amp;&amp; (
-					&lt;div>
-						Loaded
+					&lt;div className="col-sm-12">
+						&lt;div className="row">
+							{ schools.map(school => (
+								&lt;div key={school.id} className="col-sm-6 col-lg-3">
+									&lt;a href={"/school/"+school.id}>{school.name}&lt;/a>
+								&lt;/div>
+							))}
+						&lt;/div>
 					&lt;/div>
 				))}	
 			&lt;/div>
@@ -106,7 +111,7 @@ export default Home;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NewCourse.html">NewCourse</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Video.html">Video</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NewCourse.html">NewCourse</a></li><li><a href="NewSchool.html">NewSchool</a></li><li><a href="School.html">School</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Video.html">Video</a></li></ul>
 </nav>
 
 <br class="clear">
