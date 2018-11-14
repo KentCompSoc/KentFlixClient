@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "../../css/Home.css";
 
-class Home extends Component {
+class Dashboard extends Component {
 	state = {
 		schools: null,
 		loading: true,
@@ -73,4 +73,4 @@ class Home extends Component {
 	}
 };
 
-export default Home;
+export default Dashboard;

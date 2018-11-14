@@ -3,7 +3,7 @@ import "../css/App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 // Routes
-import Home from "./routes/Home";
+import Dashboard from "./routes/Dashboard";
 import Profile from "./routes/Profile";
 import NewCourse from "./routes/NewCourse";
 import NewSchool from "./routes/NewSchool";
@@ -30,7 +30,7 @@ const App = () => {
 						<PrivateRoute
 							path="/dashboard/"
 							exact
-							component={Home}
+							component={Dashboard}
 						/>
 						<PrivateRoute
 							path="/school/:school/"
