@@ -15,7 +15,7 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"createDocs": "npm run deleteOldDocs && npm run createNewDocs",
-		"deleteOldDocs": "cleandir ./docs/kent-flix-client/ %process.env.npm_package_version% /",
+		"deleteOldDocs": "cleandir ./docs/kent-flix-client/%npm_package_version%/",
 		"createNewDocs": "jsdoc -c ./docs-config.json",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
