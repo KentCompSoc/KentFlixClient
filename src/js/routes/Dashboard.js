@@ -1,55 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "../../css/Home.css";
+//Redux
+import { connect } from "react-redux";
+import { getSchools } from "../actions/schools";
 
 class Dashboard extends Component {
-	state = {
-		schools: null,
-		loading: true,
-		error: false,
-	}
-
 	componentDidMount() {
-		this.getSchools().then(data => {
-			if(data.error) {
-				this.setState({ error: data.message, loading: false })
-				console.error(data.message);
-				return;
-			}
-			this.setState({ schools: data.payload, loading: false })
-		}).catch(error => {
-			console.error(error);
-			this.setState({ error: error.message, loading: false })
-		})
+		this.props.getSchools({token: this.props.token});
 	}
 
-	/**
-	 * Gets the schools
-	 * @returns {promise} Returns a promise from the request
-	 */
-	getSchools = () => {
-		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/"+this.props.token+"/schools", {
-			method: "GET",
-			mode: "cors",
-			cache: "default",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json; charset=utf-8",
-			},
-			redirect: "follow",
-			referrer: "no-referrer",
-		}).then(response => response.json());
-	}
 	render() {
-		const { loading, error, schools } = this.state;
+		const {error, schools } = this.props;
 		return (
 			<div className="row">
 				<div className="col-sm-12"><h2>Schools</h2></div>
-				{( loading && (
-					<div className="loading">
-						<div className="spinner primary"></div>
-					</div>
-				))}
 
 				{( error && (
 					<div>
@@ -57,7 +22,7 @@ class Dashboard extends Component {
 					</div>
 				))}
 
-				{( schools && (
+				{( schools ? (
 					<div className="col-sm-12">
 						<div className="row">
 							{ schools.map(school => (
@@ -67,10 +32,33 @@ class Dashboard extends Component {
 							))}
 						</div>
 					</div>
+				) : (
+					<div className="loading">
+						<div className="spinner primary"></div>
+					</div>
 				))}	
 			</div>
 		)
 	}
 };
 
-export default Dashboard;
+function mapStateToProps ({ user, schools }) {
+	return {
+		token: user.token,
+		error: schools.error,
+		loading: schools.loading,
+		schools: schools.data
+	}
+}
+
+function mapDispatchToProps (dispatch) {
+	return {
+		getSchools: (data) => dispatch(getSchools(data))
+	}
+}
+
+export default connect(
+	mapStateToProps,
+  mapDispatchToProps
+)(Dashboard)
+
