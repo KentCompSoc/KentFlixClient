@@ -12,12 +12,11 @@ class Course extends Component {
 	componentDidMount() {
 		const { course } = this.props.match.params;
 		this.getCourse(course).then(data => {
-			// FIXME: API needs to respond with 400 error
-			if(data.error) {
+			if (data.error) {
 				this.setState({ error: data.error, loading: false })
 				return;
 			}
-			this.setState({ course: data.result, loading: false })
+			this.setState({ course: data.payload, loading: false })
 		}).catch(error => {
 			console.error(error);
 			this.setState({ error, loading: false })
@@ -30,21 +29,22 @@ class Course extends Component {
 	 * @returns {promise} Returns a promise from the request
 	 */
 	getCourse = (courseID) => {
-		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/courses/"+courseID, {
-			method: "GET",
-			mode: "cors",
-			cache: "default",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json; charset=utf-8",
-			},
-			redirect: "follow",
-			referrer: "no-referrer",
-		}).then(response => response.json());
+		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/" +
+			this.props.token + "/courses/" + courseID, {
+				method: "GET",
+				mode: "cors",
+				cache: "default",
+				credentials: "same-origin",
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
+				},
+				redirect: "follow",
+				referrer: "no-referrer",
+			}).then(response => response.json());
 	}
 
 	render() {
-		const { loading, course, error } = this.state; 
+		const { loading, course, error } = this.state;
 		if (error) {
 			return (
 				<div className="row">
@@ -58,7 +58,7 @@ class Course extends Component {
 			)
 		}
 
-		if(loading) {
+		if (loading) {
 			return (
 				<div className="loading">
 					<div className="spinner primary"></div>
@@ -70,7 +70,10 @@ class Course extends Component {
 			<div className="row">
 				<div className="col-sm-12">
 					<h3>
-						{course.title}
+						{course.courseID} - {course.name}
+						<small>
+							Back to <Link to={"/school/" + course.schoolID}>school</Link>
+						</small>
 						<small>{course.lectures.length} videos available to watch</small>
 					</h3>
 				</div>
@@ -97,7 +100,7 @@ class Course extends Component {
 								<div className="button-group">
 									<Link
 										to={{
-											pathname: v.id.toLowerCase().replace(" ", "-")
+											pathname: "/course/"+course.courseID+ "/"+v.id.toLowerCase().replace(" ", "-")
 												.replace(/[^a-z-0-9]/g, ""),
 											state: v
 										}}

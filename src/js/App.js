@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import "../css/App.css";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 // Routes
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
 import NewCourse from "./routes/NewCourse";
 import NewSchool from "./routes/NewSchool";
+import School from "./routes/School";
 import Course from "./routes/Course";
 import Video from "./routes/Video";
 import Login from "./routes/Login";
@@ -14,6 +15,7 @@ import Register from "./routes/Register";
 import NotFound from "./routes/NotFound";
 // Components
 import PrivateRoute from "./components/PrivateRoute";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 class App extends Component {
@@ -37,44 +39,67 @@ class App extends Component {
 		return (
 			<Router>
 				<ScrollToTop>
-					<header className="sticky">
-						<span className="header-11">
-							<Link to="/" className="logo">Logo</Link>
-							<Link to="/" className="button">Home</Link>
-						</span>
-						{token ? (
-							<div className="button header-1" onClick={this.clearToken}>
-								Logout
-							</div>
-						) : (
-							<Link to="/login/" className="button header-1">Login</Link>
-						)}
-					</header>
-
+					<Header token={token} clearToken={this.clearToken} />
 					<div className="container">
 						{/* Routes */}
 						<Switch>
-							<Route exact path="/" component={Home} />
-							<Route exact path="/new-course/" component={NewCourse} />
-							<Route exact path="/new-school/" component={NewSchool} />
-							<Route exact path="/:year/:course/" component={Course} />
-							<Route exact path="/:year/:course/:video/" component={Video} />
+							{/* Private routes */}
+							<PrivateRoute
+								path="/dashboard/"
+								exact
+								component={Home}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/school/:school/"
+								exact
+								component={School}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/course/:course/"
+								exact
+								component={Course}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/course/:course/:video/"
+								exact
+								component={Video}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/new-school/"
+								exact
+								component={NewSchool}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/new-course/"
+								exact
+								component={NewCourse}
+								token={token}
+							/>
+							<PrivateRoute
+								path="/profile/"
+								exact
+								component={Profile}
+								token={token}
+							/>
+
+							{/* Public routes */}
 							<Route exact path="/login/" render={props =>
 								<Login
 									{...props}
-									setToken={this.setToken} 
+									setToken={this.setToken}
 									token={Boolean(token)}
 								/>
 							} />
 							<Route exact path="/register/" component={Register} />
-							<PrivateRoute
-								path="/profile/"
-								component={Profile}
-								token={token}
-							/>
 							<Route
 								path="/report-bug/"
-								component={() => window.location = 
+								exact
+								component={() => window.location =
 									"https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
 								}
 							/>

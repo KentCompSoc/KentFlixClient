@@ -80,28 +80,29 @@ class Login extends Component {
 			this.submitLogin({ email: kentID, password }).then(data => {
 				/* FIXME: Server should respond with error status */
 				if(data.error) {
-					console.error(data.infoMessage);
+					console.error(data.error.message);
 					this.setState({
 						loading: false,
-						error: data.infoMessage
+						error: data.error.message
 					})
 					return;
 				}
 
 				// Set token
-				this.props.setToken(data.result.sessionID);
+				this.props.setToken(data.payload.sessionID);
 				// Redirect user to dashboard
 				return (
 					&lt;Redirect to={{
 						path: "/dashboard/"
 					}} />
 				)
-			})
-				/* TODO: Process errors */
-				.catch(error => {
-					console.error(error);
-					this.setState({ loading: false })
-				});
+			}).catch(error => {
+				console.error(error)
+				this.setState({
+					loading: false,
+					error: error
+				})
+			});
 		}
 	}
 
@@ -220,7 +221,7 @@ export default Login;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NewCourse.html">NewCourse</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Video.html">Video</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NewCourse.html">NewCourse</a></li><li><a href="NewSchool.html">NewSchool</a></li><li><a href="School.html">School</a></li><li><a href="ScrollToTop.html">ScrollToTop</a></li><li><a href="Video.html">Video</a></li></ul>
 </nav>
 
 <br class="clear">

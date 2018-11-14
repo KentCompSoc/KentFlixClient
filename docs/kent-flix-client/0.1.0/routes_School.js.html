@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: routes/Course.js</title>
+    <title>JSDoc: Source: routes/School.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: routes/Course.js</h1>
+    <h1 class="page-title">Source: routes/School.js</h1>
 
     
 
@@ -28,23 +28,29 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "../../css/Course.css";
 
-class Course extends Component {
+/**
+ * Displays the school modules and courses
+ * @param {string} school The school id
+ */
+class School extends Component {
 	state = {
-		course: null,
+		school: null,
 		loading: true,
 		error: false,
 	}
 
 	componentDidMount() {
-		const { course } = this.props.match.params;
-		this.getCourse(course).then(data => {
+		const { school } = this.props.match.params;
+		this.getSchool(school).then(data => {
 			if (data.error) {
 				this.setState({ error: data.error, loading: false })
 				return;
 			}
-			this.setState({ course: data.payload, loading: false })
+
+			const course = data.payload.filter(i => i.lectures);
+			const module = data.payload.filter(i => i.schools)
+			this.setState({ module, course, loading: false })
 		}).catch(error => {
 			console.error(error);
 			this.setState({ error, loading: false })
@@ -52,13 +58,13 @@ class Course extends Component {
 	}
 
 	/**
-	 * Gets the course
-	 * @param {string} courseID The course id
+	 * Gets the school modules and courses
+	 * @param {string} schoolID The school id
 	 * @returns {promise} Returns a promise from the request
 	 */
-	getCourse = (courseID) => {
+	getSchool = (schoolID) => {
 		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/" +
-			this.props.token + "/courses/" + courseID, {
+			this.props.token + "/schools/" + schoolID +"/courses", {
 				method: "GET",
 				mode: "cors",
 				cache: "default",
@@ -72,14 +78,15 @@ class Course extends Component {
 	}
 
 	render() {
-		const { loading, course, error } = this.state;
+		const { loading, module, course, error } = this.state;
+		const { school } = this.props.match.params;
 		if (error) {
 			return (
 				&lt;div className="row">
 					&lt;h3>
-						Couldn't find that course
+						Couldn't find that school
 						&lt;small>
-							Why not &lt;Link to="/new-course/">submit&lt;/Link> the course?
+							Why not &lt;Link to="/new-school/">submit&lt;/Link> the school?
 						&lt;/small>
 					&lt;/h3>
 				&lt;/div>
@@ -97,56 +104,54 @@ class Course extends Component {
 		return (
 			&lt;div className="row">
 				&lt;div className="col-sm-12">
-					&lt;h3>
-						{course.courseID} - {course.name}
-						&lt;small>
-							Back to &lt;a href={"/school/" + course.schoolID}>school&lt;/a>
-						&lt;/small>
-						&lt;small>{course.lectures.length} videos available to watch&lt;/small>
-					&lt;/h3>
+					&lt;h2>
+						{school}
+					&lt;/h2>
 				&lt;/div>
-				{course.lectures.sort((x, y) => new Date(y.date) - new Date(x.date))
-					.map(v => (
-						&lt;div className="col-sm-12 col-md-4 col-lg-3" key={v.id}>
-							&lt;div className="card fluid">
-								&lt;video className="section" alt={v.title + " video image"} >
-									&lt;source
-										className="media"
-										src={v.videoURL + "#0.1"}
-										type="video/mp4"
-									/>
-								&lt;/video>
-								&lt;progress
-									className="video-progress"
-									value={v.progress || 0}
-									max={v.videoLength}
-								>&lt;/progress>
-								&lt;h4>
-									{v.title} - {v.author}
-									&lt;small>{new Date(v.date).toUTCString()}&lt;/small>
-								&lt;/h4>
-								&lt;div className="button-group">
-									&lt;Link
-										to={{
-											pathname: "/course/"+course.courseID+ "/"+v.id.toLowerCase().replace(" ", "-")
-												.replace(/[^a-z-0-9]/g, ""),
-											state: v
-										}}
-										className="button video-btn-1"
-									>
-										View
-									&lt;/Link>
-									&lt;button className="video-btn-1" disabled>Watch later&lt;/button>
+				&lt;div className="collapse">
+					&lt;input type="checkbox" id="modules" aria-hidden="true" />
+					&lt;label htmlFor="modules" aria-hidden="true">Modules&lt;/label>
+					&lt;div className="col-sm-12">
+						&lt;div className="row">
+							{module.map(m => (
+								&lt;div className="col-sm-12 col-md-4 col-lg-3" key={m.id}>
+									&lt;h4>{m.name}&lt;/h4>
 								&lt;/div>
-							&lt;/div>
+							))}
 						&lt;/div>
-					))}
+					&lt;/div>
+					&lt;input
+						type="checkbox"
+						id="courses"
+						defaultChecked
+						aria-hidden="true"
+					/>
+					&lt;label htmlFor="courses" aria-hidden="true">Courses&lt;/label>
+					&lt;div className="col-sm-12">
+						&lt;div className="row">
+							{course.map(c => (
+								&lt;a
+									className="col-sm-12 col-md-4 col-lg-3"
+									key={c.courseID}
+									href={"/course/"+c.courseID}
+								>
+									&lt;div className="card fluid">
+										&lt;h4>
+											{c.courseID} - {c.name}
+											&lt;small>{c.lectures.length} recordings available&lt;/small>
+										&lt;/h4>
+									&lt;/div>
+								&lt;/a>
+							))}
+						&lt;/div>
+					&lt;/div>
+				&lt;/div>
 			&lt;/div>
 		)
 	}
 }
 
-export default Course;
+export default School;
 </code></pre>
         </article>
     </section>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import "../../css/Home.css";
 
 class Home extends Component {
@@ -10,16 +11,15 @@ class Home extends Component {
 
 	componentDidMount() {
 		this.getSchools().then(data => {
-			// FIXME: API needs to respond with 400 error
 			if(data.error) {
-				this.setState({ error: data.infoMessage, loading: false })
-				console.error(data.infoMessage);
+				this.setState({ error: data.message, loading: false })
+				console.error(data.message);
 				return;
 			}
-			this.setState({ schools: data.result, loading: false })
+			this.setState({ schools: data.payload, loading: false })
 		}).catch(error => {
 			console.error(error);
-			this.setState({ error, loading: false })
+			this.setState({ error: error.message, loading: false })
 		})
 	}
 
@@ -28,8 +28,7 @@ class Home extends Component {
 	 * @returns {promise} Returns a promise from the request
 	 */
 	getSchools = () => {
-		// FIXME: Returns a 404 error
-		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/schools", {
+		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/"+this.props.token+"/schools", {
 			method: "GET",
 			mode: "cors",
 			cache: "default",
@@ -59,8 +58,14 @@ class Home extends Component {
 				))}
 
 				{( schools && (
-					<div>
-						Loaded
+					<div className="col-sm-12">
+						<div className="row">
+							{ schools.map(school => (
+								<div key={school.id} className="col-sm-6 col-lg-3">
+									<Link to={"/school/"+school.id}>{school.name}</Link>
+								</div>
+							))}
+						</div>
 					</div>
 				))}	
 			</div>
