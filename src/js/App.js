@@ -1,6 +1,11 @@
 import React from "react";
 import "../css/App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect
+} from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 // Routes
 import Dashboard from "./routes/Dashboard";
@@ -62,6 +67,7 @@ const App = () => {
 							exact
 							component={Profile}
 						/>
+						<Redirect exact from="/" to="/dashboard/" />
 
 						{/* Public routes */}
 						<Route exact path="/login/" render={props =>
