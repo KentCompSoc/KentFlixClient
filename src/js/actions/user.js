@@ -2,7 +2,6 @@ export const LOGIN = "LOGIN";
 export const CLEAR_TOKEN = "CLEAR_TOKEN";
 
 const baseURL = "https://kentflix-7f510.firebaseapp.com/api/v1/";
-
 /**
  * Logs the user in setting their token
  * @param {string} email The users email
@@ -11,6 +10,14 @@ const baseURL = "https://kentflix-7f510.firebaseapp.com/api/v1/";
 export function login({email, password}) {
 	const request = fetch(`${baseURL}login`, {
 		method: "POST",
+		mode: "cors",
+		cache: "default",
+		credentials: "same-origin",
+		headers: {
+			"Content-Type": "application/json; charset=utf-8",
+		},
+		redirect: "follow",
+		referrer: "no-referrer",
 		body: JSON.stringify({ email, password }),
 	});
 
