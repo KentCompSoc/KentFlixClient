@@ -79,8 +79,18 @@ class Footer extends Component {
 						<Link to="/about/">About</Link>
 					</div>
 					<div className="col-sm-6">
-						<p>Contact us</p>
-						<p>Report a bug</p>
+						<p>
+							<a href="https://github.com/KentCompSoc/KentFlixClient/issues/new/choose/">
+								Contact us
+							</a>
+						</p>
+						<p>
+							<a
+								href="https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
+							>
+								Report a bug
+							</a>
+						</p>
 					</div>
 				</div>
 				<form>

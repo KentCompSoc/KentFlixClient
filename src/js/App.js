@@ -74,13 +74,6 @@ const App = () => {
 							<Login {...props} />
 						} />
 						<Route exact path="/register/" component={Register} />
-						<Route
-							path="/report-bug/"
-							exact
-							component={() => window.location =
-								"https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
-							}
-						/>
 						<Route component={NotFound} />
 					</Switch>
 				</div>

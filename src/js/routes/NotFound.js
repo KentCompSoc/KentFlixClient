@@ -1,12 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const NotFound = () => (
 	<div className="row">
 		<h3>
 			Couldn't find that page
 			<small>
-				<Link to="/report-bug/">Report a bug</Link>
+				<a
+					href="https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
+				>
+					Report a bug
+				</a>
 			</small>
 		</h3>
 	</div>
