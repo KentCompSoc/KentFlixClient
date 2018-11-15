@@ -67,7 +67,7 @@ class Course extends Component {
 								<div className="button-group">
 									<Link
 										to={{
-											pathname: "/course/"+course.courseID+ "/"+v.id
+											pathname: "/course/"+course.id+ "/"+v.id
 												.toLowerCase().replace(" ", "-")
 												.replace(/[^a-z-0-9]/g, ""),
 											state: v
