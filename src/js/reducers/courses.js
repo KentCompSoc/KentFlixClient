@@ -33,15 +33,23 @@ function courses(state = initialState, action){
 				}
 			})
 
+			const newModules = {
+				modules,
+				schoolID: null,
+				id: action.courseID
+			}
+
+			const item = state.data.filter(d => d.id === newModules.id)[0];
+			const pos = state.data.indexOf(item);
+			if (pos !== -1) {
+				state.data[pos] = { ...state.data[pos], ...newModules };
+			} else {
+				state.data.push(newModules);
+			}
+
 			return {
 				...state,
-				data: [
-					{
-						modules,
-						schoolID: null,
-						id: action.courseID
-					},
-				],
+				data: state.data,
 				loading: false,
 			}
 		case GET_LECTURE_BY_ID : 
