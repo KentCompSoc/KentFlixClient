@@ -9,30 +9,30 @@ const initialState = {
 	data: []
 }
 
-function schools(state = initialState, action){
-	switch (action.type){
-		case START_REQUEST :
+function schools(state = initialState, action) {
+	switch (action.type) {
+		case START_REQUEST:
 			return {
 				...state,
 				error: null,
 				loading: true
 			}
-		case DISPLAY_ERROR :
+		case DISPLAY_ERROR:
 			return {
 				...state,
 				error: action.error,
 				loading: false
 			}
-		case GET_SCHOOL_BY_ID :
+		case GET_SCHOOL_BY_ID:
 			const newSchool = {
 				id: action.schoolID,
 				courses: action.courses,
-				modules: action.modules, 
+				modules: action.modules,
 			};
 			const item = state.data.filter(d => d.id === newSchool.id)[0];
 			const pos = state.data.indexOf(item);
-			if(pos !== -1) {
-				state.data[pos] = {...state.data[pos], ...newSchool};
+			if (pos !== -1) {
+				state.data[pos] = { ...state.data[pos], ...newSchool };
 			} else {
 				state.data.push(newSchool);
 			}
@@ -41,16 +41,16 @@ function schools(state = initialState, action){
 				data: state.data,
 				loading: false,
 			}
-		case GET_SCHOOLS :
-			action.schools.forEach(s => {
+		case GET_SCHOOLS:
+			Object.values(action.schools).forEach(s => {
 				const newSchool = {
-					id: s.id,
+					id: s.schoolID,
 					name: s.name
 				}
-				const item = state.data.filter(d => d.id === s.id)[0];
+				const item = state.data.filter(d => d.id === newSchool.id)[0];
 				const pos = state.data.indexOf(item);
-				if(pos !== -1) {
-					state.data[pos] = {...state.data[pos], ...newSchool};
+				if (pos !== -1) {
+					state.data[pos] = { ...state.data[pos], ...newSchool };
 				} else {
 					state.data.push(newSchool);
 				}
@@ -60,7 +60,7 @@ function schools(state = initialState, action){
 				data: state.data,
 				loading: false,
 			}
-		default :
+		default:
 			return state
 	}
 }

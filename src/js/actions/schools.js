@@ -21,14 +21,15 @@ const getHeader = {
  * @param {string} token The users token
  * @param {string} schoolID The schools id
  */
-export function getSchoolById({token, schoolID}) {
+export function getSchoolById({ token, schoolID }) {
+	console.log(schoolID)
 	const request = fetch(`${baseURL}/${token}/schools/${schoolID}/courses`,
 		getHeader
 	);
 	return dispatch => {
 		dispatch({ type: START_REQUEST })
 		request.then(response => response.json()).then(data => {
-			if(data.error) {
+			if (data.error) {
 				console.error(data.error.message);
 				dispatch({
 					type: DISPLAY_ERROR,
@@ -36,7 +37,7 @@ export function getSchoolById({token, schoolID}) {
 				})
 			}
 
-			if(data.success) {
+			if (data.success) {
 				const courses = data.payload.filter(item => item.lectures).map(c => {
 					return {
 						period: c.period,
@@ -61,10 +62,10 @@ export function getSchoolById({token, schoolID}) {
 
 		}).catch(error => {
 			console.error(error);
-				dispatch({
-					type: DISPLAY_ERROR,
-					error: "An unexpected error occurred",
-				})
+			dispatch({
+				type: DISPLAY_ERROR,
+				error: "An unexpected error occurred",
+			})
 		});
 	}
 }
@@ -73,12 +74,12 @@ export function getSchoolById({token, schoolID}) {
  * Gets all schools
  * @param {string} token The users token
  */
-export function getSchools({token}) {
+export function getSchools({ token }) {
 	const request = fetch(`${baseURL}/${token}/schools`, getHeader);
 	return dispatch => {
 		dispatch({ type: START_REQUEST })
 		request.then(response => response.json()).then(data => {
-			if(data.error) {
+			if (data.error) {
 				console.error(data.error.message);
 				dispatch({
 					type: DISPLAY_ERROR,
@@ -86,7 +87,7 @@ export function getSchools({token}) {
 				})
 			}
 
-			if(data.success) {
+			if (data.success) {
 				dispatch({
 					type: GET_SCHOOLS,
 					schools: data.payload
@@ -95,10 +96,10 @@ export function getSchools({token}) {
 
 		}).catch(error => {
 			console.error(error);
-				dispatch({
-					type: DISPLAY_ERROR,
-					error: "An unexpected error occurred",
-				})
+			dispatch({
+				type: DISPLAY_ERROR,
+				error: "An unexpected error occurred",
+			})
 		});
 	}
 }
