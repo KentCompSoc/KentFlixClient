@@ -27,7 +27,6 @@ function schools(state = initialState, action) {
 			const newSchool = {
 				id: action.schoolID,
 				courses: action.courses,
-				modules: action.modules,
 			};
 			const item = state.data.filter(d => d.id === newSchool.id)[0];
 			const pos = state.data.indexOf(item);

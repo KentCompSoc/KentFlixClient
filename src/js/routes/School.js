@@ -15,15 +15,14 @@ class School extends Component {
 	}
 
 	render() {
-		const { schools, error } = this.props;
-		const { school } = this.props.match.params;
-		let selectedSchool = schools.filter(s => s.id === school)[0];
+		const { school, error, schoolName } = this.props;
+		const schoolID = this.props.match.params.school;
 
 		if (error) {
 			return (
 				<div className="row">
 					<div className="col-sm-12">
-						<h2>{school}</h2>
+						<h2>{schoolName ? schoolName : schoolID}</h2>
 					</div>
 					<div className="col-sm-12">
 						<h3><mark className="secondary">{error}</mark></h3>
@@ -35,62 +34,30 @@ class School extends Component {
 		return (
 			<div className="row">
 				<div className="col-sm-12">
-					<h2>{school}</h2>
+					<h2>{schoolName ? schoolName : schoolID}</h2>
 				</div>
-				{ selectedSchool ? (
-					<div className="collapse">
-						<input type="checkbox" id="modules" aria-hidden="true" />
-						<label htmlFor="modules" aria-hidden="true">Modules</label>
+				{ school ? school.courses ? (school.courses.map(c => (
+							<Link
+								className="col-sm-12 col-md-4 col-lg-3"
+								key={c.id}
+								to={"/course/"+c.id}
+							>
+								<div className="card fluid">
+									<h4>{c.id} - {c.name}</h4>
+								</div>
+							</Link>
+						))
+					) : (
 						<div className="col-sm-12">
-							<div className="row">
-								{ selectedSchool.modules ? (
-									selectedSchool.modules.map(m => (
-										<div className="col-sm-12 col-md-4 col-lg-3" key={m.id}>
-											<h4>{m.name}</h4>
-										</div>
-									))
-								) : (
-									<div className="loading">
-										<div className="spinner primary"></div>
-									</div>
-								)}
+							<div className="loading">
+								<div className="spinner primary"></div>
 							</div>
 						</div>
-						<input
-							type="checkbox"
-							id="courses"
-							defaultChecked
-							aria-hidden="true"
-						/>
-						<label htmlFor="courses" aria-hidden="true">Courses</label>
-						<div className="col-sm-12">
-							<div className="row">
-								{ selectedSchool.courses ? (
-									selectedSchool.courses.map(c => (
-										<Link
-											className="col-sm-12 col-md-4 col-lg-3"
-											key={c.courseID}
-											to={"/course/"+c.courseID}
-										>
-											<div className="card fluid">
-												<h4>
-													{c.courseID} - {c.name}
-													<small>{c.lectureCount} recordings available</small>
-												</h4>
-											</div>
-										</Link>
-									))
-								) : (
-									<div className="loading">
-										<div className="spinner primary"></div>
-									</div>
-								)}
-							</div>
-						</div>
-					</div>
 				) : (
-					<div className="loading">
-						<div className="spinner primary"></div>
+					<div className="col-sm-12">
+						<div className="loading">
+							<div className="spinner primary"></div>
+						</div>
 					</div>
 				)}
 			</div>
@@ -99,9 +66,19 @@ class School extends Component {
 }
 
 function mapStateToProps ({ user, schools }, ownProps) {
+	const schoolID = ownProps.match.params.school;
+	let school = {};
+
+	if(schools.data.filter(s => s.id === schoolID).length === 1) {
+		school = schools.data.filter(s => s.id === schoolID)[0];
+	}
+
+	const schoolName = school.name;
+
 	return {
 		token: user.token,
-		schools: schools.data.filter(s => s.id === ownProps.match.params.school),
+		school,
+		schoolName,
 		error: schools.error
 	}
 }

@@ -22,7 +22,6 @@ const getHeader = {
  * @param {string} schoolID The schools id
  */
 export function getSchoolById({ token, schoolID }) {
-	console.log(schoolID)
 	const request = fetch(`${baseURL}/${token}/schools/${schoolID}/courses`,
 		getHeader
 	);
@@ -38,25 +37,10 @@ export function getSchoolById({ token, schoolID }) {
 			}
 
 			if (data.success) {
-				const courses = data.payload.filter(item => item.lectures).map(c => {
-					return {
-						period: c.period,
-						courseID: c.courseID,
-						name: c.name,
-						lectureCount: c.lectures.length
-					}
-				})
-				const modules = data.payload.filter(item => item.schools).map(m => {
-					return {
-						name: m.name,
-						id: m.id
-					}
-				})
 				dispatch({
 					type: GET_SCHOOL_BY_ID,
 					schoolID,
-					courses,
-					modules,
+					courses: data.payload,
 				})
 			}
 

@@ -1,5 +1,6 @@
 import {
 	GET_COURSE_BY_ID,
+	GET_LECTURE_BY_ID,
 	START_REQUEST,
 	DISPLAY_ERROR
 } from "../actions/courses";
@@ -27,7 +28,8 @@ function courses(state = initialState, action){
 				id: action.data.courseID,
 				lectures: action.data.lectures,
 				name: action.data.name,
-				schoolID: action.data.schoolID
+				schoolID: action.data.schoolID,
+				lastFetched: Date.now()
 			};
 			const item = state.data.filter(d => d.id === newCourse.id)[0];
 			const pos = state.data.indexOf(item);
@@ -41,6 +43,28 @@ function courses(state = initialState, action){
 				data: state.data,
 				loading: false,
 			}
+		case GET_LECTURE_BY_ID : 
+			console.log(action.data);
+			/*
+			const newLecture = {
+				id: action.data.courseID,
+				lectures: action.data.lectures,
+				name: action.data.name,
+				schoolID: action.data.schoolID
+			};
+			const item = state.data.filter(d => d.id === newCourse.id)[0];
+			const pos = state.data.indexOf(item);
+			if(pos !== -1) {
+				state.data[pos] = {...state.data[pos], ...newCourse};
+			} else {
+				state.data.push(newCourse);
+			}
+			return {
+				...state,
+				data: state.data,
+				loading: false,
+			}*/
+			return state
 		default :
 			return state
 	}
