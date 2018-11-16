@@ -37,17 +37,16 @@ class School extends Component {
 					<h2>{schoolName ? schoolName : schoolID}</h2>
 				</div>
 				{ school ? school.courses ? (school.courses.map(c => (
-							<Link
-								className="col-sm-12 col-md-4 col-lg-3"
-								key={c.id}
-								to={"/course/"+c.id}
-							>
-								<div className="card fluid">
-									<h4>{c.id} - {c.name}</h4>
-								</div>
-							</Link>
-						))
-					) : (
+					<Link
+						className="col-sm-12 col-md-4 col-lg-3"
+						key={c.id}
+						to={"/course/"+c.id}
+					>
+						<div className="card fluid">
+							<h4>{c.id} - {c.name}</h4>
+						</div>
+					</Link>
+				))) : (
 						<div className="col-sm-12">
 							<div className="loading">
 								<div className="spinner primary"></div>
