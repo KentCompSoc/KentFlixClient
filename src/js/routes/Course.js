@@ -14,8 +14,7 @@ class Course extends Component {
 
 	render() {
 		const courseID = this.props.match.params.course;
-		const { error } = this.props;
-		const course = this.props.course[0] ? this.props.course[0] : {};
+		const { error, course, schoolName } = this.props;
 
 		if (error) {
 			return (
@@ -36,7 +35,9 @@ class Course extends Component {
 					<h3>
 						{courseID} - {course.name ? course.name : "Loading course..."}
 						<small>
-							Back to <Link to={"/school/" + course.schoolID}>school</Link>
+							Back to <Link to={"/school/" + course.schoolID}>{
+								schoolName ? schoolName : "school"
+							}</Link>
 						</small>
 						<small>
 							{course.lectures ? course.lectures.length : "..."} videos
@@ -67,7 +68,7 @@ class Course extends Component {
 								<div className="button-group">
 									<Link
 										to={{
-											pathname: "/course/"+course.id+ "/"+v.id
+											pathname: "/lecture/"+v.id
 												.toLowerCase().replace(" ", "-")
 												.replace(/[^a-z-0-9]/g, ""),
 											state: v
@@ -90,11 +91,24 @@ class Course extends Component {
 	}
 }
 
-function mapStateToProps ({ user, courses }, ownProps) {
-	const course = ownProps.match.params.course;
+function mapStateToProps ({ user, courses, schools }, ownProps) {
+	const courseID = ownProps.match.params.course;
+	let course = {};
+	let schoolName = null;
+
+	if(courses.data.filter(c => c.id === courseID).length === 1) {
+		course = courses.data.filter(c => c.id === courseID)[0];
+	}
+
+	if(course.schoolID
+		&& schools.data.filter(s => s.id === course.schoolID).length === 1) {
+		schoolName = schools.data.filter(s => s.id === course.schoolID)[0].name;
+	}
+
 	return {
 		token: user.token,
-		course: courses.data.filter(c => c.id === course),
+		course,
+		schoolName,
 		error: courses.error,
 	}
 }
