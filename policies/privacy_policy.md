@@ -37,11 +37,6 @@ We do not sell, rent, or trade user information. We may share aggregated non-per
 
 We do not share aggregated non-personally identifiable information with business partners.
 
-## Compliance with Children's Online Privacy Protection Act (COPPA)
-We believe that protecting the privacy of children is important and that for that reason we do not knowingly collect or store information from users who are under the age of 13. Our services are not structured or designed to attract anyone under the age of 13.
-
-If we discover that a user is under the age of 13 through information they have volunteered or otherwise, we will inform them that they are unable to use our services.
-
 ## Right to Erasure
 If you wish for us to stop processing or storing your information for any reason, you can send us an email at compsoc@kent.ac.uk with the subject of ``Data Erasure Request``
 
