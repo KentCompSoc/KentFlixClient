@@ -2,13 +2,13 @@
 
 Last Edited: November 20th 2018
 
-This privacy policy governs how the Author and Contributors ("developers", "we", "us") of this Software Application collect, use, maintain, and disclose information collected from its users (individually, "you") of  KentFlix Client, KentFlix Server, and KentFlixDesktop Application .
+This privacy policy governs how the Author and Contributors ("developers", "we", "us") of KentFlix, the KentFlix Client, the KentFlix Server, and the KentFlixDesktop Application collect, use, maintain, and disclose information collected from its users (individually, "you").
 
 ## Personally Identifiable Information
 When you sign up for KentFlix we may collect personally identifiable information such as your University of Kent login and email address.
-Once we receive your email, we will attempt to
+
 In accordance with relevant legislations, we do not knowingly allow anybody under the age of 16 to signup to KentFlix.
-If we discover anybody under the age of 16 has signed up for KentFlix, we will terminate their account.
+If we discover anybody under the age of 16 has signed up for KentFlix, we will terminate their account and access to KentFlix.
 
 ## Non Personally Identifiable Information
 We may collect non-personally identifiable information when users interact with KentFlix.
@@ -43,26 +43,26 @@ We believe that protecting the privacy of children is important and that for tha
 If we discover that a user is under the age of 13 through information they have volunteered or otherwise, we will inform them that they are unable to use our services.
 
 ## Right to Erasure
-If you wish for us to stop processing or storing your information for any reason, you can send us an email at ______ with the subject of ``Data Erasure Request``
+If you wish for us to stop processing or storing your information for any reason, you can send us an email at compsoc@kent.ac.uk with the subject of ``Data Erasure Request``
 
 Once we receive your email, we will attempt to remove your information from our databases and services within a reasonable timeframe.
 
 ## Data Portability
-If you wish to receive a copy of the personal information concerning you, you can send us an email at _____ with the subject of ``Data Portability Request``.
+If you wish to receive a copy of the personal information concerning you, you can send us an email at compsoc@kent.ac.uk with the subject of ``Data Portability Request``.
 
 Once we receive your email, we will attempt to gather your stored and processed information, put it in a folder which will be extracted and sent to you.
 For security reasons, this will not include your password.
 
 ## Right to Access
-If you wish to find out what information we are currently storing or processing about you and/or why, you can send us an email at _____ with the subject of ``Data Access Request``.
+If you wish to find out what information we are currently storing or processing about you and/or why, you can send us an email at compsoc@kent.ac.uk with the subject of ``Data Access Request``.
 
 Once we receive your email, we will attempt to reply to your email containing the type of information we are storing or processing about you and why we are doing so.
 
 ## Breach Notification
-If KentFlix or any of its databases or servers is breached, we will attempt to email you within a reasonable time-frame and we will attempt to reset the passwords of all the affected accounts.
+If KentFlix or any of its databases or servers is breached, compromised, or hacked , we will attempt to email you within a reasonable time-frame and we will attempt to reset the KentFlix passwords of all the affected accounts.
 
 ## Changes to this privacy policy
-From time to time we may update this policy. When we do so, we will revise the last edited date and the effective date. We encourage users to check this page for any changes to keep apprised of how we handle information we collect through our services.
+From time to time we may update this policy. When we do so, we will revise the last edited date. We encourage users to check this page for any changes to keep apprised of how we handle information we collect through our services.
 
 ## Acceptance
 By using KentFlix, you signify your acceptance of this policy. If you do not agree with this policy, you may not use KentFlix.
