@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../../css/Video.css";
+//Redux
+import { connect } from "react-redux";
+import { getLectureById } from "../actions/lectures";
 
 /**
  * Displays a video.
@@ -8,18 +11,11 @@ import "../../css/Video.css";
 class Video extends Component {
 	state = {
 		currentTime: 0,
-		video: null,
-		loading: true,
 	}
-
 	componentDidMount() {
-		// TODO: Get video via API
-
-		if(this.props.location.state) {
-			this.setState({ video: this.props.location.state, loading: false })
-		} else {
-			this.setState({ error: true, loading: false })
-		}
+		const { token } = this.props;
+		const { lecture } = this.props.match.params;
+		this.props.getLectureById({ token, lectureID: lecture.replace(/-/g, ".") });
 	}
 
 	/**
@@ -31,72 +27,90 @@ class Video extends Component {
 	}
 	render() {
 		//const { year, course, videoURI } = this.props.match.params;
-		const { currentTime, video, loading } = this.state;
+		const { currentTime } = this.state;
+		const { lecture, error } = this.props;
+		const id = this.props.match.params.lecture;
 
-		if(loading) {
+
+		if (error && error.message) {
 			return (
-				<div className="loading">
-					<div className="spinner primary"></div>
+				<div className="row">
+					<div className="col-sm-12"><h2>Error</h2></div>
+					<div className="col-sm-12">
+						<h3><mark className="secondary">{error.message}</mark></h3>
+					</div>
 				</div>
 			)
 		}
-
-		/* if () {
-			return (
-				<div className="row">
-					<h3>
-						Couldn't find that video or the course
-						<small>
-							Why not <Link to="/submit-a-course/">submit</Link> the course?
-						</small>
-					</h3>
-				</div>
-			)
-		} */
-	
-		/* if () {
-			return (
-				<div className="row">
-					<h3>
-						Couldn't find that video but found the course
-						<small>
-							Report a <Link to="/report-a-broken-link/">broken</Link> link?
-						</small>
-					</h3>
-				</div>
-			)
-		} */
 
 		return (
 			<div className="row">
 				<div className="col-sm-12">
 					<h3>
-						{video.title}
-						<small>Back to <Link to="./">course</Link></small>
+						{lecture ? lecture.title : "Loading..."}
+						<small>
+							Back to <Link to={"/module/" + id.slice(0, id.indexOf('-'))}>
+								{id.slice(0, id.indexOf('-'))}
+							</Link>
+						</small>
 					</h3>
 				</div>
 				<div className="col-sm-12">
-					<video
-						className="video-video"
-						id="video"
-						onTimeUpdate={this.updateCurrentTime()}
-						controls
-					>
-						<source src={video.videoURL} type="video/mp4" />
-					</video>
-					<progress
-						className="video-progress"
-						value={currentTime}
-						max={video.videoLength}
-					></progress>
-					<h4>
-						{video.title} - {video.author}
-						<small>{new Date(video.date).toUTCString()}</small>
-					</h4>
+					{lecture ? (
+						<React.Fragment>
+							<video
+								className="video-video"
+								id="video"
+								onTimeUpdate={this.updateCurrentTime()}
+								controls
+							>
+								<source src={lecture.videoURL} type="video/mp4" />
+							</video>
+						
+							<progress
+								className="video-progress"
+								value={currentTime}
+								max={lecture.duration}
+							></progress>
+							<h4>
+								{lecture.title} - {lecture.author}
+								<small>{new Date(lecture.date).toUTCString()}</small>
+							</h4>
+						</React.Fragment>
+					) : (
+						<div className="loading">
+							<div className="spinner primary"></div>
+						</div>
+					)}
 				</div>
 			</div>
 		)
 	}
 }
 
-export default Video;
+function mapStateToProps ({ user, lectures, error }, ownProps) {
+	const id = ownProps.match.params.lecture.replace(/-/g, ".");
+	const courseID = id.slice(0, id.indexOf('.'));
+	let lecture = null;
+
+	if(lectures[courseID] && lectures[courseID][id]) {
+		lecture = lectures[courseID][id];
+	}
+
+	return {
+		token: user.token,
+		lecture,
+		error
+	}
+}
+
+function mapDispatchToProps (dispatch) {
+	return {
+		getLectureById: (data) => dispatch(getLectureById(data))
+	}
+}
+
+export default connect(
+	mapStateToProps,
+  mapDispatchToProps
+)(Video)

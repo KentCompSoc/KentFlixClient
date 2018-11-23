@@ -8,7 +8,6 @@ import { getSchools } from "../actions/schools";
 class Dashboard extends Component {
 	componentDidMount() {
 		this.props.getSchools({token: this.props.token});
-		console.log(this.props.schools)
 	}
 
 	render() {
