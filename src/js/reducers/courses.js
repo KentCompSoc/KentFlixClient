@@ -1,28 +1,11 @@
 import {
 	GET_COURSE_BY_ID,
 	GET_LECTURE_BY_ID,
-	START_REQUEST,
-	DISPLAY_ERROR
+	GET_COURSES_BY_ID
 } from "../actions/courses";
 
-const initialState = {
-	data: []
-}
-
-function courses(state = initialState, action){
+function courses(state = {}, action){
 	switch (action.type){
-		case START_REQUEST :
-			return {
-				...state,
-				error: null,
-				loading: true
-			}
-		case DISPLAY_ERROR :
-			return {
-				...state,
-				error: action.error,
-				loading: false
-			}
 		case GET_COURSE_BY_ID :
 			const modules = Object.values(action.modules).map(m => {
 				return {
@@ -74,6 +57,12 @@ function courses(state = initialState, action){
 				loading: false,
 			}*/
 			return state
+			case GET_COURSES_BY_ID :
+			console.log(action.data);
+			return {
+				...state,
+				[action.schoolID]: action.data
+			}
 		default :
 			return state
 	}

@@ -1,9 +1,10 @@
 export const GET_COURSE_BY_ID = "GET_COURSE_BY_ID";
 export const GET_LECTURE_BY_ID = "GET_LECTURE_BY_ID";
+export const GET_COURSES_BY_ID = "GET_COURSES_BY_ID";
 export const DISPLAY_ERROR = "DISPLAY_ERROR";
-export const START_REQUEST = "START_REQUEST";
+export const REMOVE_ERROR = "REMOVE_ERROR";
 
-const baseURL = "https://kentflix-7f510.firebaseapp.com/api/v1";
+const baseURL = "https://api.kentflix.com/v1";
 const getHeader = {
 	method: "GET",
 	mode: "cors",
@@ -25,7 +26,7 @@ export function getCourseById({token, courseID}) {
 	const request = fetch(`${baseURL}/${token}/courses/${courseID}/modules`,
 		getHeader);
 	return dispatch => {
-		dispatch({ type: START_REQUEST })
+		dispatch({ type: REMOVE_ERROR })
 		request.then(response => response.json()).then(data => {
 			if(data.error) {
 				console.error(data.error.message);
@@ -62,7 +63,7 @@ export function getCourseById({token, courseID}) {
 export function getLectureById({token, lectureID}) {
 	const request = fetch(`${baseURL}/${token}/lectures/${lectureID}`, getHeader);
 	return dispatch => {
-		dispatch({ type: START_REQUEST })
+		dispatch({ type: REMOVE_ERROR })
 		request.then(response => response.json()).then(data => {
 			if(data.error) {
 				console.error(data.error.message);
@@ -76,6 +77,39 @@ export function getLectureById({token, lectureID}) {
 				dispatch({
 					type: GET_LECTURE_BY_ID,
 					data: data.payload,
+				});
+			}
+
+		}).catch(error => {
+			console.error(error);
+				dispatch({
+					type: DISPLAY_ERROR,
+					error: "An unexpected error occurred",
+				})
+		});
+	}
+}
+
+export function getCoursesBySchoolID({ token, schoolID }) {
+	const request = fetch(
+		`${baseURL}/${token}/schools/${schoolID}/courses`, getHeader
+	);
+	return dispatch => {
+		dispatch({ type: REMOVE_ERROR })
+		request.then(response => response.json()).then(data => {
+			if(data.error) {
+				console.error(data.error.message);
+				dispatch({
+					type: DISPLAY_ERROR,
+					error: data.error.message,
+				})
+			}
+
+			if(data.success) {
+				dispatch({
+					type: GET_COURSES_BY_ID,
+					data: data.payload,
+					schoolID
 				});
 			}
 
