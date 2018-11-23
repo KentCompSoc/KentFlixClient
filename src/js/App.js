@@ -15,7 +15,7 @@ import NewSchool from "./routes/NewSchool";
 import School from "./routes/School";
 import Course from "./routes/Course";
 import Module from "./routes/Module";
-import Video from "./routes/Video";
+import Lecture from "./routes/Lecture";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import NotFound from "./routes/NotFound";
@@ -56,7 +56,7 @@ const App = () => {
 						<PrivateRoute
 							path="/lecture/:lecture/"
 							exact
-							component={Video}
+							component={Lecture}
 						/>
 						<PrivateRoute
 							path="/new-school/"
