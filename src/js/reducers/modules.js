@@ -2,7 +2,7 @@ import {
 	GET_COURSE_MODULES_BY_COURSE_ID
 } from "../actions/modules";
 
-function lectures(state = {}, action){
+function modules(state = {}, action){
 	switch (action.type){
 		case GET_COURSE_MODULES_BY_COURSE_ID : 
 			return {
@@ -14,4 +14,4 @@ function lectures(state = {}, action){
 	}
 }
 
-export default lectures;
+export default modules;
