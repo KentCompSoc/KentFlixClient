@@ -19,14 +19,14 @@ class Course extends Component {
 		const { error, modules, schoolID, schoolName, name } = this.props;
 		const years = [3, 2, 1];
 
-		if (error) {
+		if (error && error.message) {
 			return (
 				<div className="row">
 					<div className="col-sm-12">
 						<h2>{courseID}</h2>
 					</div>
 					<div className="col-sm-12">
-						<h3><mark className="secondary">{error}</mark></h3>
+						<h3><mark className="secondary">{error.message}</mark></h3>
 					</div>
 				</div>
 			)
@@ -80,7 +80,10 @@ class Course extends Component {
 	}
 }
 
-function mapStateToProps ({ user, schools, courses, modules }, ownProps) {
+function mapStateToProps (
+		{ user, schools, courses, modules, error },
+		ownProps
+	) {
 	const courseID = ownProps.match.params.course;
 	let schoolID, schoolName, name = null
 	const schoolKey = Object.keys(courses)
@@ -99,7 +102,7 @@ function mapStateToProps ({ user, schools, courses, modules }, ownProps) {
 		name,
 		schoolID,
 		schoolName,
-		error: courses.error,
+		error
 	}
 }
 
