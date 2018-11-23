@@ -3,19 +3,21 @@ import { Link } from "react-router-dom";
 import "../../css/Course.css";
 //Redux
 import { connect } from "react-redux";
+import { getCourseModulesByCourseId } from "../actions/modules";
 import { getCourseById } from "../actions/courses";
 
 class Course extends Component {
 	componentDidMount() {
 		const { token } = this.props;
 		const { course } = this.props.match.params;
+		this.props.getCourseModulesByCourseId({ token, courseID: course });
 		this.props.getCourseById({ token, courseID: course });
 	}
 
 	render() {
 		const courseID = this.props.match.params.course;
-		const { error, course, schoolName } = this.props;
-		const years = ["3", "2", "1"];
+		const { error, modules, schoolID, schoolName, name } = this.props;
+		const years = [3, 2, 1];
 
 		if (error) {
 			return (
@@ -34,27 +36,27 @@ class Course extends Component {
 			<div className="row">
 				<div className="col-sm-12">
 					<h3>
-						{courseID}
+						{courseID} - {name}
 						<small>
-							Back to <Link to={"/school/" + course.schoolID}>{
+							Back to <Link to={"/school/" + schoolID}>{
 								schoolName ? schoolName : "school"
 							}</Link>
 						</small>
 					</h3>
 				</div>
-				{ course.modules ? years.map(y => (
+				{ modules ? years.map(y => (
 					<React.Fragment key={y}>
 						<h2 className="col-sm-12">Stage {y}</h2>
 						{
-							course.modules.filter(m => m.stage === y).length !== 0 ? (
-								course.modules.filter(m => m.stage === y).map(m => (
+							Object.keys(modules).filter(key => modules[key].stage === y).length !== 0 ? (
+								Object.keys(modules).filter(key => modules[key].stage === y).map(key => (
 									<Link
 										className="col-sm-12 col-md-4 col-lg-3"
-										key={m.id}
-										to={"/module/"+m.id}
+										key={key}
+										to={"/module/"+key}
 									>
 										<div className="card fluid">
-											<h4>{m.id} - {m.name}</h4>
+											<h4>{key} - {modules[key].name}</h4>
 										</div>
 									</Link>
 								))
@@ -74,26 +76,28 @@ class Course extends Component {
 				)}
 			</div>
 		)
+		
 	}
 }
 
-function mapStateToProps ({ user, courses, schools }, ownProps) {
+function mapStateToProps ({ user, schools, courses, modules }, ownProps) {
 	const courseID = ownProps.match.params.course;
-	let course = {};
-	let schoolName = null;
-
-	if(courses.data.filter(c => c.id === courseID).length === 1) {
-		course = courses.data.filter(c => c.id === courseID)[0];
+	let schoolID, schoolName, name = null
+	const schoolKey = Object.keys(courses)
+		.filter(key => courses[key][courseID] !== null)[0];
+	if(schoolKey) {
+		schoolID = schoolKey;
+		name = courses[schoolKey][courseID].name;
+		if(schools[schoolKey]) {
+			schoolName = schools[schoolKey].name;
+		}
 	}
-
-	if(course.schoolID
-		&& schools.data.filter(s => s.id === course.schoolID).length === 1) {
-		schoolName = schools.data.filter(s => s.id === course.schoolID)[0].name;
-	}
-
 	return {
 		token: user.token,
-		course,
+		course: courses[courseID],
+		modules: modules[courseID],
+		name,
+		schoolID,
 		schoolName,
 		error: courses.error,
 	}
@@ -101,6 +105,9 @@ function mapStateToProps ({ user, courses, schools }, ownProps) {
 
 function mapDispatchToProps (dispatch) {
 	return {
+		getCourseModulesByCourseId: (data) => dispatch(
+			getCourseModulesByCourseId(data)
+		),
 		getCourseById: (data) => dispatch(getCourseById(data))
 	}
 }
