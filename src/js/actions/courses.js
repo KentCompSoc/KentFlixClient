@@ -52,6 +52,11 @@ export function getCourseById({token, courseID}) {
 	}
 }
 
+/**
+ * Gets the courses by school id
+ * @param {string} token The users token
+ * @param {string} schoolID The school id
+ */
 export function getCoursesBySchoolID({ token, schoolID }) {
 	const request = fetch(
 		`${baseURL}/${token}/schools/${schoolID}/courses`, getHeader

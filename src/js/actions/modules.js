@@ -19,7 +19,7 @@ const getHeader = {
 }
 
 /**
- * Gets the course by it's id
+ * Gets the course modules by it's course id
  * @param {string} token The users token
  * @param {string} courseID The courses id
  */
@@ -57,7 +57,6 @@ export function getCourseModulesByCourseId({token, courseID}) {
 
 /**
  * Gets the course by it's id
- * TODO: Wait for api to be fixed
  * @param {string} token The users token
  * @param {string} lectureID The lecture id
  */

@@ -17,7 +17,6 @@ const getHeader = {
 }
 /**
  * Gets the lecture by it's id
- * TODO: Wait for api to be fixed
  * @param {string} token The users token
  * @param {string} lectureID The lecture id
  */
@@ -53,7 +52,6 @@ export function getLectureById({token, lectureID}) {
 
 /**
  * Gets the lecture by the modules id
- * TODO: Wait for api to be fixed
  * @param {string} token The users token
  * @param {string} moduleID The module id
  */
