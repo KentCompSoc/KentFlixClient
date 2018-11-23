@@ -1,9 +1,9 @@
 export const GET_SCHOOL_BY_ID = "GET_SCHOOL_BY_ID";
 export const GET_SCHOOLS = "GET_SCHOOLS";
 export const DISPLAY_ERROR = "DISPLAY_ERROR";
-export const START_REQUEST = "START_REQUEST";
+export const REMOVE_ERROR = "REMOVE_ERROR";
 
-const baseURL = "https://kentflix-7f510.firebaseapp.com/api/v1";
+const baseURL = "https://api.kentflix.com/v1";
 const getHeader = {
 	method: "GET",
 	mode: "cors",
@@ -26,7 +26,7 @@ export function getSchoolById({ token, schoolID }) {
 		getHeader
 	);
 	return dispatch => {
-		dispatch({ type: START_REQUEST })
+		dispatch({ type: REMOVE_ERROR })
 		request.then(response => response.json()).then(data => {
 			if (data.error) {
 				console.error(data.error.message);
@@ -61,7 +61,7 @@ export function getSchoolById({ token, schoolID }) {
 export function getSchools({ token }) {
 	const request = fetch(`${baseURL}/${token}/schools`, getHeader);
 	return dispatch => {
-		dispatch({ type: START_REQUEST })
+		dispatch({ type: REMOVE_ERROR })
 		request.then(response => response.json()).then(data => {
 			if (data.error) {
 				console.error(data.error.message);
