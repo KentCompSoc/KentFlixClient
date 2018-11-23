@@ -6,7 +6,6 @@ import {
 function courses(state = {}, action){
 	switch (action.type){
 		case GET_COURSE_BY_ID :
-			console.log(action);
 			return {
 				...state,
 				[action.course.schoolID]: {
@@ -18,7 +17,6 @@ function courses(state = {}, action){
 				}
 			}
 		case GET_COURSES_BY_SCHOOL_ID :
-			console.log(action.data);
 			return {
 				...state,
 				[action.schoolID]: action.data
