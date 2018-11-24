@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import '../../css/Form.css';
+//Redux
+import { connect } from "react-redux";
+import { login } from "../actions/user";
 
 class Login extends Component {
 	state = {
@@ -12,10 +15,6 @@ class Login extends Component {
 			value: '',
 			error: '',
 		},
-		message: null,
-		fail: false,
-		loading: false,
-		success: false
 	};
 
 	handleChange = type => event => {
@@ -29,7 +28,6 @@ class Login extends Component {
 		const password = this.state.password.value;
 
 		event.preventDefault();
-		this.setState({ error: null })
 		if(!kentID) {
 			this.setState({
 				kentID: { message: "Please provide a KentID" }
@@ -48,60 +46,14 @@ class Login extends Component {
 
 		if(kentID && password) {
 			console.log("Submitting form...");
-			this.setState({ loading: true })
-			this.submitLogin({ email: kentID, password }).then(data => {
-				/* FIXME: Server should respond with error status */
-				if(data.error) {
-					console.error(data.error.message);
-					this.setState({
-						loading: false,
-						error: data.error.message
-					})
-					return;
-				}
-
-				// Set token
-				this.props.setToken(data.payload.sessionID);
-				// Redirect user to dashboard
-				return (
-					<Redirect to={{
-						path: "/dashboard/"
-					}} />
-				)
-			}).catch(error => {
-				console.error(error)
-				this.setState({
-					loading: false,
-					error: error
-				})
-			});
+			this.props.login({ email: kentID, password});
 		}
 	}
 
-	/**
-	 * Sends a login request
-	 * @param {object} data The data to be uploaded
-	 * @returns {promise} Returns a promise from the request
-	 */
-	submitLogin = (data = {}) => {
-		return fetch("https://kentflix-7f510.firebaseapp.com/api/v1/login", {
-			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json; charset=utf-8",
-			},
-			redirect: "follow",
-			referrer: "no-referrer",
-			body: JSON.stringify(data),
-		}).then(response => response.json());
-	}
-
 	render() {
-		const { from } = this.props.location.state || { from: { pathname: "/" } };
-		const { kentID, password, loading, error } = this.state;
-		const { token } = this.props;
+		const { from } = this.props.location.state || { from: { pathname: "/dashboard/" } };
+		const { kentID, password } = this.state;
+		const { token, error, loading } = this.props;
 
 		if (token) {
 			return <Redirect to={from} />;
@@ -182,4 +134,21 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+function mapStateToProps ({ user }) {
+	return {
+		token: Boolean(user.token),
+		error: user.error,
+		loading: user.loading
+	}
+}
+
+function mapDispatchToProps (dispatch) {
+	return {
+		login: (data) => dispatch(login(data))
+	}
+}
+
+export default connect(
+	mapStateToProps,
+  mapDispatchToProps
+)(Login)
