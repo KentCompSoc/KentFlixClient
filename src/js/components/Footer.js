@@ -50,7 +50,7 @@ class Footer extends Component {
 				this.setState({
 					clientContributors: {
 						loading: false,
-						error,
+						error: "Unable to get client contributors",
 					}
 				});
 			})
@@ -70,7 +70,7 @@ class Footer extends Component {
 				this.setState({
 					serverContributors: {
 						loading: false,
-						error,
+						error: "Unable to get client contributors",
 					}
 				});
 			})

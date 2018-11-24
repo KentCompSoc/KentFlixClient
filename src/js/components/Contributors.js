@@ -10,6 +10,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const styles = {
 	center: {
 		textAlign: "center"
+	},
+	avatar: {
+		margin: 2,
+		display: "inline-block"
 	}
 };
 const Contributors = props => {
@@ -39,23 +43,25 @@ const Contributors = props => {
 	return (
 		<Grid item xs={6}>
 			<Grid container spacing={8}>
-			<Grid item xs={12}>
-				<Typography variant="body1" color="inherit">{type} side:</Typography>
-			</Grid>
-			{ contributors.data.length > 0 ? (contributors.data.map(user => (
-				<Grid key={user.id} item xs={3} md={1}>
-					<Avatar
-						component="a"
-						href={user.html_url}
-						alt={user.login + "avatar"}
-						src={user.avatar_url}
-					/>
+				<Grid item xs={12}>
+					<Typography variant="body1" color="inherit">{type} side:</Typography>
 				</Grid>
-			))) : (
-				<Typography variant="body1" color="inherit">
-					{contributors.data.message}
-				</Typography>
-			)}
+				<Grid item xs={12}>
+					{ contributors.data.length > 0 ? (contributors.data.map(user => (
+							<Avatar
+								key={user.id}
+								component="a"
+								href={user.html_url}
+								alt={user.login + "avatar"}
+								src={user.avatar_url}
+								className={classes.avatar}
+							/>
+					))) : (
+						<Typography variant="body1" color="inherit">
+							{contributors.data.message}
+						</Typography>
+					)}
+				</Grid>
 			</Grid>
 		</Grid>
 	)
