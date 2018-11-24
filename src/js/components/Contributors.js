@@ -5,23 +5,21 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // Styles
 const styles = {
-	root: {
-		padding: 8,
-	},
-	link: {
-		color: "white"
+	center: {
+		textAlign: "center"
 	}
 };
 const Contributors = props => {
-	const { type, contributors } = props;
+	const { type, contributors, classes } = props;
 	if (contributors.loading) {
 		return (
 			<Grid item xs={6}>
 				<Typography variant="body1" color="inherit">{type} side:</Typography>
-				<div className="loading">
-					<div className="spinner primary"></div>
+				<div className={classes.center}>
+					<CircularProgress />
 				</div>
 			</Grid>
 		)
