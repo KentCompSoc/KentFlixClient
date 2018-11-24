@@ -53,7 +53,7 @@ class Header extends Component {
 					{ token ? (
 						<React.Fragment>
 							<IconButton
-								aria-owns={open ? 'menu-appbar' : undefined}
+								aria-owns={open ? "account-menu" : undefined}
 								aria-haspopup="true"
 								onClick={this.handleMenu}
 								color="inherit"
@@ -61,16 +61,10 @@ class Header extends Component {
 								<AccountCircle />
 							</IconButton>
 							<Menu
-								id="menu-appbar"
+								id="account-menu"
 								anchorEl={anchorEl}
-								anchorOrigin={{
-								vertical: 'top',
-								horizontal: 'right',
-								}}
-								transformOrigin={{
-								vertical: 'top',
-								horizontal: 'right',
-								}}
+								anchorOrigin={{ vertical: "top", horizontal: "right" }}
+								transformOrigin={{ vertical: "top", horizontal: "right" }}
 								open={open}
 								onClose={this.handleClose}
 							>
