@@ -14,7 +14,12 @@ class Module extends Component {
 
 	render() {
 		const moduleID = this.props.match.params.module;
-		const { error, name, lectures, courseID, courseName } = this.props;
+		const { error, name, courseID, courseName } = this.props;
+		let { lectures } = this.props;
+		if(lectures) {
+			lectures = Object.values(lectures)
+				.sort((a, b) => new Date(b.date) - new Date(a.date));
+		}
 
 		if (error && error.message) {
 			return (
