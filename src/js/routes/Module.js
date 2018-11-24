@@ -1,10 +1,31 @@
+// React
 import React, { Component } from "react";
+// Router
 import { Link } from "react-router-dom";
-import "../../css/Course.css";
 //Redux
 import { connect } from "react-redux";
 import { getLecturesByModuleID } from "../actions/lectures";
-
+// Material-UI
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CircularProgress from '@material-ui/core/CircularProgress';
+// Styles
+const styles = {
+	root: {
+		padding: 5,
+	},
+	center: {
+		textAlign: "center",
+	},
+	media: {
+		objectFit: 'cover',
+	},
+};
 class Module extends Component {
 	componentDidMount() {
 		const { token } = this.props;
@@ -14,88 +35,72 @@ class Module extends Component {
 
 	render() {
 		const moduleID = this.props.match.params.module;
-		const { error, name, courseID, courseName } = this.props;
+		const { error, name, courseID, courseName, classes } = this.props;
 		let { lectures } = this.props;
 		if(lectures) {
 			lectures = Object.values(lectures)
 				.sort((a, b) => new Date(b.date) - new Date(a.date));
 		}
 
-		if (error && error.message) {
-			return (
-				<div className="row">
-					<div className="col-sm-12">
-						<h3>
-							{moduleID}
-							{courseID && (
-								<small>
-								Back to <Link to={"/course/" + courseID}>{
-									courseName ? courseName : "course"
-								}</Link>
-							</small>
-							)}
-						</h3>
-					</div>
-					<div className="col-sm-12">
-						<h3><mark className="secondary">{error.message}</mark></h3>
-					</div>
-				</div>
-			)
-		}
-
 		return (
-			<div className="row">
-				<div className="col-sm-12">
-					<h3>
-						{moduleID} - {name}
-						{courseID && (
-							<small>
+			<div className={classes.root}>
+				<Grid container spacing={8}>
+					<Grid item xs={12}>
+						<Typography variant="h3">{moduleID} - {name}</Typography>
+						{ courseID && (
+							<Typography variant="body1">
 								Back to <Link to={"/course/" + courseID}>{
 									courseName ? courseName : "course"
 								}</Link>
-							</small>
+							</Typography>
 						)}
-						<small>
-							{lectures ? Object.keys(lectures).length : "..."} videos
-							available to watch
-						</small>
-					</h3>
-				</div>
-				{ lectures ? Object.keys(lectures).map(key => (
-					<div className="col-sm-12 col-md-4 col-lg-3" key={key}>
-						<div className="card fluid">
-							<video className="section" alt={lectures[key].title + " video image"} >
-								<source
-									className="media"
-									src={lectures[key].videoURL + "#0.1"}
-									type="video/mp4"
-								/>
-							</video>
-							<progress
-								className="video-progress"
-								value={lectures[key].progress || 0}
-								max={lectures[key].videoLength}
-							></progress>
-							<h4>
-								{lectures[key].title} - {lectures[key].author}
-								<small>{new Date(lectures[key].date).toUTCString()}</small>
-							</h4>
-							<div className="button-group">
-								<Link
-									to={"/lecture/"+key.replace(/\./g, "-")}
-									className="button video-btn-1"
+						<Typography variant="body1" gutterBottom>
+							{ lectures ? Object.keys(lectures).length : "..."} videos
+								available to watch
+						</Typography>
+					</Grid>
+					{ error ? (
+						<Grid item xs={12}>
+							<Typography variant="p">Error: { error }</Typography>
+						</Grid>
+					) : lectures ? Object.keys(lectures).map(key => (
+						<Grid
+								key={key}
+								item
+								xs={12}
+								sm={4}
+								md={3}
+								lg={2}
+								className={classes.center}
+							>
+							<Card>
+								<CardActionArea
+									component={Link}
+									to={"/lecture/"+lectures[key].lectureID.replace(/\./g, "-")}
 								>
-									View
-								</Link>
-								<button className="video-btn-1" disabled>Watch later</button>
-							</div>
-						</div>
-					</div>
-				)) : (
-					<div className="loading">
-						<div className="spinner primary"></div>
-					</div>
-				)}
+									<CardMedia
+										component="video"
+										className={classes.media}
+										src={lectures[key].videoURL + "#0.1"}
+										alt={lectures[key].title + " video image"}
+									/>
+									<CardContent>
+										<Typography variant="h6">
+											{lectures[key].title} - {lectures[key].author}
+										</Typography>
+										<Typography variant="body1">
+											{new Date(lectures[key].date).toUTCString()}
+										</Typography>
+									</CardContent>
+								</CardActionArea>
+							</Card>
+						</Grid>
+					)) : (
+						<Grid item xs={12} className={classes.center}>
+							<CircularProgress />
+						</Grid>
+					)}
+				</Grid>
 			</div>
 		)
 	}
@@ -126,7 +131,7 @@ function mapStateToProps ({ user, modules, lectures, error }, ownProps) {
 		name,
 		courseID,
 		lectures: videos,
-		error,
+		error: error.message
 	}
 }
 
@@ -139,4 +144,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
 	mapStateToProps,
   mapDispatchToProps
-)(Module)
+	)(withStyles(styles)(Module))
