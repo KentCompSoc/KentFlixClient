@@ -1,5 +1,7 @@
 export const LOGIN = "LOGIN";
 export const CLEAR_TOKEN = "CLEAR_TOKEN";
+export const DISPLAY_ERROR = "DISPLAY_ERROR";
+export const REMOVE_ERROR = "REMOVE_ERROR";
 
 const baseURL = "https://api.kentflix.com/v1";
 /**
@@ -22,18 +24,13 @@ export function login({email, password}) {
 	});
 
 	return dispatch => {
-		dispatch({
-			type: LOGIN,
-			error: null,
-			loading: true
-		})
+		dispatch({ type: REMOVE_ERROR })
 		request.then(response => response.json()).then(data => {
 			if(data.error) {
 				console.error(data.error.message);
 				dispatch({
-					type: LOGIN,
+					type: DISPLAY_ERROR,
 					error: data.error.message,
-					loading: false
 				})
 			}
 
@@ -49,9 +46,8 @@ export function login({email, password}) {
 		}).catch(error => {
 			console.error(error);
 				dispatch({
-					type: LOGIN,
-					error,
-					loading: false
+					type: DISPLAY_ERROR,
+					error: error.message,
 				})
 		});
 	}
