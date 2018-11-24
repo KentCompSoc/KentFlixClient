@@ -1,11 +1,27 @@
+// React
 import React, { Component } from "react";
+// Router
 import { Link } from "react-router-dom";
-import "../../css/Course.css";
 //Redux
 import { connect } from "react-redux";
 import { getCourseModulesByCourseId } from "../actions/modules";
 import { getCourseById } from "../actions/courses";
-
+// Material-UI
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+// Styles
+const styles = theme => ({
+	root: {
+		padding: 5,
+	},
+	center: {
+		textAlign: "center",
+	},
+});
 class Course extends Component {
 	componentDidMount() {
 		const { token } = this.props;
@@ -16,7 +32,7 @@ class Course extends Component {
 
 	render() {
 		const courseID = this.props.match.params.course;
-		const { error, modules, schoolID, schoolName, name } = this.props;
+		const { error, modules, schoolID, schoolName, name, classes } = this.props;
 		const years = [3, 2, 1];
 
 		if (error && error.message) {
@@ -33,47 +49,65 @@ class Course extends Component {
 		}
 
 		return (
-			<div className="row">
-				<div className="col-sm-12">
-					<h3>
-						{courseID} - {name}
-						<small>
+			<div className={classes.root}>
+				<Grid container spacing={8}>
+					<Grid item xs={12}>
+						<Typography variant="h2">
+							{courseID} - {name}
+						</Typography>
+						<Typography variant="body1" gutterBottom>
 							Back to <Link to={"/school/" + schoolID}>{
 								schoolName ? schoolName : "school"
 							}</Link>
-						</small>
-					</h3>
-				</div>
-				{ modules ? years.map(y => (
-					<React.Fragment key={y}>
-						<h2 className="col-sm-12">Stage {y}</h2>
-						{
-							Object.keys(modules).filter(key => modules[key].stage === y).length !== 0 ? (
-								Object.keys(modules).filter(key => modules[key].stage === y).map(key => (
-									<Link
-										className="col-sm-12 col-md-4 col-lg-3"
-										key={key}
-										to={"/module/"+key}
-									>
-										<div className="card fluid">
-											<h4>{key} - {modules[key].name}</h4>
-										</div>
-									</Link>
-								))
-							) : (
-								<div className="col-sm-12">No modules found for stage {y}</div>
-							)
-						} {
-							y !== "1" && (
-								<hr className="col-sm-12" />
-							)
-						}
-					</React.Fragment>
-				)) : (
-					<div className="loading">
-						<div className="spinner primary"></div>
-					</div>
-				)}
+						</Typography>
+					</Grid>
+					{ modules ? years.map(y => (
+						<React.Fragment key={y}>
+							<Grid item xs={12}>
+								<Typography variant="h4" gutterBottom>Stage {y}</Typography>
+							</Grid>
+							{
+								Object.keys(modules).filter(key => modules[key].stage === y)
+									.length !== 0 ? (
+									Object.keys(modules).filter(key => modules[key].stage === y)
+										.map(key => (
+										<Grid
+											key={key}
+											item
+											xs={12}
+											sm={4}
+											md={3}
+											lg={2}
+											className={classes.center}
+										>
+											<Button
+												variant="outlined"
+												component={Link}
+												to={"/module/"+key}
+											>
+												{key} - {modules[key].name}
+											</Button>
+										</Grid>
+									))
+								) : (
+									<Grid item xs={12}>
+										<Typography variant="body1" gutterBottom>
+											No modules found for stage {y}
+										</Typography>
+									</Grid>
+								)
+							} {
+								y !== 1 && (
+									<Grid item xs={12}><Divider /></Grid>
+								)
+							}
+						</React.Fragment>
+					)) : (
+						<Grid item xs={12} className={classes.center}>
+							<CircularProgress />
+						</Grid>
+					)}
+				</Grid>
 			</div>
 		)
 		
@@ -118,4 +152,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
 	mapStateToProps,
   mapDispatchToProps
-)(Course)
+	)(withStyles(styles)(Course))
