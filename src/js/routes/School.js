@@ -13,7 +13,6 @@ import Button from '@material-ui/core/Button';
 const styles = {
 	root: {
 		padding: 5,
-		flexGrow: 1,
 	},
 	center: {
 		textAlign: "center",

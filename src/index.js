@@ -10,6 +10,18 @@ import { Provider } from "react-redux";
 import App from "./js/App";
 // Service worker
 import * as serviceWorker from "./serviceWorker";
+// Material-UI
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+// Theme
+const theme = createMuiTheme({
+	typography: {
+		useNextVariants: true,
+	},
+	palette: {
+		type: "dark",
+	}
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -19,9 +31,14 @@ const store = createStore(
 );
 
 ReactDOM.render(
-	<Provider store={store}>
-		<App />
-	</Provider>
+	<React.Fragment>
+		<CssBaseline />
+		<MuiThemeProvider theme={theme}>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</MuiThemeProvider>
+	</React.Fragment>
 , document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

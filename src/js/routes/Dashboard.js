@@ -12,15 +12,14 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 // Styles
-const styles = {
+const styles = theme => ({
 	root: {
 		padding: 5,
-		flexGrow: 1,
 	},
 	center: {
 		textAlign: "center",
 	},
-};
+});
 class Dashboard extends Component {
 	componentDidMount() {
 		this.props.getSchools({token: this.props.token});
