@@ -23,69 +23,74 @@ import NotFound from "./routes/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+// Material-UI
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const App = () => {
 	return (
-		<Router>
-			<ScrollToTop>
-				<Header />
-				<div className="container">
-					{/* Routes */}
-					<Switch>
-						{/* Private routes */}
-						<PrivateRoute
-							path="/dashboard/"
-							exact
-							component={Dashboard}
-						/>
-						<PrivateRoute
-							path="/school/:school/"
-							exact
-							component={School}
-						/>
-						<PrivateRoute
-							path="/course/:course/"
-							exact
-							component={Course}
-						/>
-						<PrivateRoute
-							path="/module/:module/"
-							exact
-							component={Module}
-						/>
-						<PrivateRoute
-							path="/lecture/:lecture/"
-							exact
-							component={Lecture}
-						/>
-						<PrivateRoute
-							path="/new-school/"
-							exact
-							component={NewSchool}
-						/>
-						<PrivateRoute
-							path="/new-course/"
-							exact
-							component={NewCourse}
-						/>
-						<PrivateRoute
-							path="/profile/"
-							exact
-							component={Profile}
-						/>
-						<Redirect exact from="/" to="/dashboard/" />
+		<React.Fragment>
+			<CssBaseline />
+			<Router>
+				<ScrollToTop>
+					<Header />
+					<div className="container">
+						{/* Routes */}
+						<Switch>
+							{/* Private routes */}
+							<PrivateRoute
+								path="/dashboard/"
+								exact
+								component={Dashboard}
+							/>
+							<PrivateRoute
+								path="/school/:school/"
+								exact
+								component={School}
+							/>
+							<PrivateRoute
+								path="/course/:course/"
+								exact
+								component={Course}
+							/>
+							<PrivateRoute
+								path="/module/:module/"
+								exact
+								component={Module}
+							/>
+							<PrivateRoute
+								path="/lecture/:lecture/"
+								exact
+								component={Lecture}
+							/>
+							<PrivateRoute
+								path="/new-school/"
+								exact
+								component={NewSchool}
+							/>
+							<PrivateRoute
+								path="/new-course/"
+								exact
+								component={NewCourse}
+							/>
+							<PrivateRoute
+								path="/profile/"
+								exact
+								component={Profile}
+							/>
+							<Redirect exact from="/" to="/dashboard/" />
 
-						{/* Public routes */}
-						<Route exact path="/login/" render={props =>
-							<Login {...props} />
-						} />
-						<Route exact path="/register/" component={Register} />
-						<Route component={NotFound} />
-					</Switch>
-				</div>
-				<Footer />
-			</ScrollToTop>
-		</Router>
+							{/* Public routes */}
+							<Route exact path="/login/" render={props =>
+								<Login {...props} />
+							} />
+							<Route exact path="/register/" component={Register} />
+							<Route component={NotFound} />
+						</Switch>
+					</div>
+					<Footer />
+				</ScrollToTop>
+			</Router>
+		</React.Fragment>
 	);
 }
 
