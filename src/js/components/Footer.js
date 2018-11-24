@@ -1,10 +1,26 @@
+// React
 import React, { Component } from 'react';
+// Router
 import { Link } from 'react-router-dom';
+// Components
 import Contributors from './Contributors';
-
+// Material-UI
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+// Styles
+const styles = {
+	root: {
+		padding: 8,
+	},
+	link: {
+		color: "white"
+	}
+};
 class Footer extends Component {
 	state = {
-		theme: "dark",
 		clientContributors: {
 			loading: true,
 			data: null,
@@ -59,113 +75,83 @@ class Footer extends Component {
 			})
 	}
 
-	changeSheet = sheetTheme => event => {
-		const sheet = document.getElementById("mini-css");
-		sheet.href = sheet.href.replace(this.state.theme, sheetTheme);
-		this.setState({ theme: sheetTheme });
-	}
-
 	render() {
-		const { theme, clientContributors, serverContributors } = this.state;
+		const { clientContributors, serverContributors } = this.state;
+		const { classes } = this.props;
 
 		return (
-			<footer>
-				<p>
-					Made with <i className="far fa-heart" title="love" aria-hidden>
-					</i> <span className="sr-only">love</span> by students for students
-				</p>
-				<div className="row">
-					<div className="col-sm-6">
-						<Link to="/about/">About</Link>
-					</div>
-					<div className="col-sm-6">
-						<p>
-							<a href="https://github.com/KentCompSoc/KentFlixClient/issues/new/choose/">
-								Contact us
-							</a>
-						</p>
-						<p>
+			<AppBar component="footer" position="static" >
+				<Toolbar>
+					<Grid container spacing={8} className={classes.root}>
+						<Grid item xs={12}>
+							<Typography variant="body1" color="inherit">
+								Made with <i className="far fa-heart" title="love" aria-hidden>
+								</i> <span className="sr-only">love</span> by students for
+								students
+							</Typography>
+						</Grid>
+						<Grid item xs={6}>
+							<Typography variant="body1">
+								<Link className={classes.link} to="/about/">About</Link>
+							</Typography>
+						</Grid>
+						<Grid item xs={6}>
+							<Typography variant="body1">
+								<a
+									className={classes.link}
+									href="https://github.com/KentCompSoc/KentFlixClient/issues/new/choose/"
+								>
+									Contact us
+								</a>
+							</Typography>
+						</Grid>
+						<Grid item xs={6}>
+							<Typography variant="body1">
+								<a
+									className={classes.link}
+									href="https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
+								>
+									Report a bug
+								</a>
+							</Typography>
+						</Grid>
+						<Grid item xs={12}>
 							<a
-								href="https://github.com/KentCompSoc/KentFlixClient/issues/new?template=bug_report.md"
+								className="icon-link"
+								href="https://github.com/KentCompSoc/KentFlixClient/"
 							>
-								Report a bug
+								<i
+									className="fab fa-github"
+									title="GitHub link"
+									aria-hidden
+								></i>
+								<span className="sr-only">GitHub link</span>
 							</a>
-						</p>
-					</div>
-				</div>
-				<form>
-					<legend>Theme</legend>
-					<div>
-						<input
-							type="radio"
-							onChange={this.changeSheet("dark")}
-							checked={theme === "dark"}
-							id="dark"
-							name="dark"
-							value="dark"
-						/>
-						<label htmlFor="dark">Dark</label>
-					</div>
-					<div>
-						<input
-							type="radio"
-							onChange={this.changeSheet("default")}
-							checked={theme === "default"}
-							id="light"
-							name="light"
-							value="light"
-						/>
-						<label htmlFor="light">Light</label>
-					</div>
-					<div>
-						<input
-							type="radio"
-							onChange={this.changeSheet("nord")}
-							checked={theme === "nord"}
-							id="nord"
-							name="nord"
-							value="nord"
-						/>
-						<label htmlFor="nord">Nord</label>
-					</div>
-				</form>
-				<div className="button small">
-					<a
-						className="icon-link"
-						href="https://github.com/KentCompSoc/KentFlixClient/"
-					>
-						<i
-							className="fab fa-github"
-							title="GitHub link"
-							aria-hidden
-						></i>
-						<span className="sr-only">GitHub link</span>
-					</a>
-				</div>
-				<div className="button small">
-					<a
-						className="icon-link"
-						href="https://www.facebook.com/groups/kentcomputingsociety/"
-					>
-						<i
-							className="fab fa-facebook-square"
-							title="Facebook link"
-							aria-hidden
-						></i>
-						<span className="sr-only">Facebook link</span>
-					</a>
-				</div>
-				<hr />
-				<div className="row">
-					<p>Top contributors</p>
-				</div>
-				<div className="row">
-					<Contributors type="Client" contributors={clientContributors} />
-					<Contributors type="Server" contributors={serverContributors} />
-				</div>
-			</footer>
+							<a
+								className="icon-link"
+								href="https://www.facebook.com/groups/kentcomputingsociety/"
+							>
+								<i
+									className="fab fa-facebook-square"
+									title="Facebook link"
+									aria-hidden
+								></i>
+								<span className="sr-only">Facebook link</span>
+							</a>
+						</Grid>
+						<Grid item xs={12}><hr /></Grid>
+						<Grid item xs={12}>
+							<Typography variant="body1" color="inherit">
+								Top contributors
+							</Typography>
+						</Grid>
+						<Contributors type="Client" contributors={clientContributors} />
+						<Contributors type="Server" contributors={serverContributors} />
+					</Grid>
+				</Toolbar>
+			</AppBar>
 		)
 	}
 };
 
-export default Footer;
+export default withStyles(styles)(Footer);
