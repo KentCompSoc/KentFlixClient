@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 const styles = {
 	root: {
 		padding: 5,
+		flexGrow: 1,
 	},
 	center: {
 		textAlign: "center",
@@ -29,36 +30,38 @@ class Dashboard extends Component {
 		const { error, schools, classes } = this.props;
 
 		return (
-			<Grid container spacing={8} className={classes.root}>
-				<Grid item xs={12}>
-					<Typography variant="h2" gutterBottom>Schools</Typography>
-				</Grid>
-				{ error ? (
-					<Grid item xs={12}>Error: { error }</Grid>
-				) : schools ? (
+			<div className={classes.root}>
+				<Grid container spacing={8}>
 					<Grid item xs={12}>
-						<Grid container spacing={8}>
-							{ schools.length === 0 ? (
-								<Grid item xs={12}>No schools found</Grid>
-							) : Object.keys(schools).map(id => (
-								<Grid key={id} item xs={6} lg={3} className={classes.center}>
-									<Button
-										variant="outlined"
-										component={Link}
-										to={"/school/"+id}
-									>
-										{schools[id].name}
-									</Button>
-								</Grid>
-							))}
+						<Typography variant="h2" gutterBottom>Schools</Typography>
+					</Grid>
+					{ error ? (
+						<Grid item xs={12}>Error: { error }</Grid>
+					) : schools ? (
+						<Grid item xs={12}>
+							<Grid container spacing={8}>
+								{ schools.length === 0 ? (
+									<Grid item xs={12}>No schools found</Grid>
+								) : Object.keys(schools).map(id => (
+									<Grid key={id} item xs={6} lg={3} className={classes.center}>
+										<Button
+											variant="outlined"
+											component={Link}
+											to={"/school/"+id}
+										>
+											{schools[id].name}
+										</Button>
+									</Grid>
+								))}
+							</Grid>
 						</Grid>
-					</Grid>
-				) : (
-					<Grid item xs={12} className={classes.center}>
-						<CircularProgress />
-					</Grid>
-				)}
-			</Grid>
+					) : (
+						<Grid item xs={12} className={classes.center}>
+							<CircularProgress />
+						</Grid>
+					)}
+				</Grid>
+			</div>
 		)
 	}
 }
