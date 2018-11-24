@@ -36,14 +36,24 @@ class Dashboard extends Component {
 						<Typography variant="h2" gutterBottom>Schools</Typography>
 					</Grid>
 					{ error ? (
-						<Grid item xs={12}>Error: { error }</Grid>
+						<Grid item xs={12}>
+							<Typography variant="p">Error: { error }</Typography>
+						</Grid>
 					) : schools ? (
 						<Grid item xs={12}>
 							<Grid container spacing={8}>
 								{ schools.length === 0 ? (
 									<Grid item xs={12}>No schools found</Grid>
 								) : Object.keys(schools).map(id => (
-									<Grid key={id} item xs={6} lg={3} className={classes.center}>
+									<Grid
+										key={id}
+										item
+										xs={12}
+										sm={4}
+										md={3}
+										lg={2}
+										className={classes.center}
+									>
 										<Button
 											variant="outlined"
 											component={Link}
