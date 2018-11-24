@@ -15,6 +15,7 @@ class Login extends Component {
 			value: '',
 			error: '',
 		},
+		loading: false
 	};
 
 	handleChange = type => event => {
@@ -24,18 +25,21 @@ class Login extends Component {
 	};
 
 	submit = () => event => {
+		this.setState({ loading: true })
 		let kentID = this.state.kentID.value;
 		const password = this.state.password.value;
 
 		event.preventDefault();
 		if(!kentID) {
 			this.setState({
-				kentID: { message: "Please provide a KentID" }
+				kentID: { message: "Please provide a KentID" },
+				loading: false
 			})
 		}
 		if(!password) {
 			this.setState({
-				password: { message: "Please provide a password" }
+				password: { message: "Please provide a password" },
+				loading: false
 			})
 		}
 
@@ -50,10 +54,17 @@ class Login extends Component {
 		}
 	}
 
+	componentDidUpdate(prevProps) {
+		const { error } = this.props;
+		if(error !== prevProps.error && error) {
+			this.setState({ loading: false })
+		}
+	}
+
 	render() {
 		const { from } = this.props.location.state || { from: { pathname: "/dashboard/" } };
-		const { kentID, password } = this.state;
-		const { token, error, loading } = this.props;
+		const { kentID, password, loading } = this.state;
+		const { token, error } = this.props;
 
 		if (token) {
 			return <Redirect to={from} />;
@@ -134,11 +145,10 @@ class Login extends Component {
 	}
 }
 
-function mapStateToProps ({ user }) {
+function mapStateToProps ({ user, error }) {
 	return {
 		token: Boolean(user.token),
-		error: user.error,
-		loading: user.loading
+		error: error.message,
 	}
 }
 

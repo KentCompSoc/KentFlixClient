@@ -18,6 +18,7 @@ import Module from "./routes/Module";
 import Lecture from "./routes/Lecture";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
+import About from "./routes/About";
 import NotFound from "./routes/NotFound";
 // Components
 import PrivateRoute from "./components/PrivateRoute";
@@ -89,6 +90,7 @@ const App = props => {
 							<Login {...props} />
 						} />
 						<Route exact path="/register/" component={Register} />
+						<Route exact path="/about/" component={About} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>
