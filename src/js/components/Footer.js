@@ -10,6 +10,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 // Styles
 const styles = {
 	root: {
@@ -90,6 +91,7 @@ class Footer extends Component {
 								students
 							</Typography>
 						</Grid>
+						<Grid item xs={12}><Divider /></Grid>
 						<Grid item xs={6}>
 							<Typography variant="body1">
 								<Link className={classes.link} to="/about/">About</Link>
@@ -115,6 +117,7 @@ class Footer extends Component {
 								</a>
 							</Typography>
 						</Grid>
+						<Grid item xs={12}><Divider /></Grid>
 						<Grid item xs={12}>
 							<a
 								className="icon-link"
@@ -139,7 +142,7 @@ class Footer extends Component {
 								<span className="sr-only">Facebook link</span>
 							</a>
 						</Grid>
-						<Grid item xs={12}><hr /></Grid>
+						<Grid item xs={12}><Divider /></Grid>
 						<Grid item xs={12}>
 							<Typography variant="body1" color="inherit">
 								Top contributors
