@@ -4,7 +4,41 @@ import '../../css/Form.css';
 //Redux
 import { connect } from "react-redux";
 import { login } from "../actions/user";
-
+// Material-UI
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Chip from '@material-ui/core/Chip';
+// Styles
+const styles = theme => ({
+	root: {
+		padding: 5,
+	},
+	center: {
+		textAlign: 'center'
+	},
+	btnContainer: {
+		display: 'flex',
+	},
+	loginBtn: {
+		flex: 1,
+		marginRight: 5,
+		marginTop: 5,
+	},
+	registerBtn: {
+		flex: 1,
+		marginLeft: 5,
+		marginTop: 5,
+	},
+	error: {
+		borderColor: theme.palette.error.main
+	}
+});
 class Login extends Component {
 	state = {
 		kentID: {
@@ -64,82 +98,80 @@ class Login extends Component {
 	render() {
 		const { from } = this.props.location.state || { from: { pathname: "/dashboard/" } };
 		const { kentID, password, loading } = this.state;
-		const { token, error } = this.props;
+		const { token, error, classes } = this.props;
 
 		if (token) {
 			return <Redirect to={from} />;
 		}
 		return (
-			<div className="row">
-				<div className="
-					col-sm-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3
-				">
-					<form onSubmit={this.submit()} autoComplete="on">
-						<legend><h1 className="form-header">Login</h1></legend>
-						<div className="input-group vertical">
-							<label htmlFor="kentID">
-								Kent ID
-								{ kentID.message && (
-									<mark className="secondary">{kentID.message}</mark>
-								)}
-							</label>
-							<input
-								onChange={this.handleChange("kentID")}
-								value={kentID.value || ''}
-								type="text"
-								id="kentID"
-								name="kentID"
-								placeholder="ABC123"
-								disabled={loading}
-								autoFocus
-							/>
-						</div>
-						<div className="input-group vertical">
-							<label htmlFor="password">
-								Password
-								{ password.message && (
-									<mark className="secondary">{password.message}</mark>
-								)}
-							</label>
-							<input
-								onChange={this.handleChange("password")}
-								value={password.value || ''}
-								type="password"
-								id="password"
-								name="password"
-								placeholder="Password"
-								disabled={loading}
-							/>
-						</div>
-						<div className="btn-container">
-							{ loading && (
-								<div className="loading">
-									<div className="spinner primary"></div>
-								</div>
-							)}
-							{error && (
-								<mark className="secondary">
-									{error}
-								</mark>
-							)}
-							<div className="button-group btn-group">
-								<button
-									className="primary shadowed btn-1"
-									type="submit"
-									disabled={loading}>
-									Login
-								</button>
-								<Link
-									className="button shadowed btn-1"
-									to={loading ? "#" : "/register/"}
-									disabled={loading}
-								>
-									Register
-								</Link>
-							</div>
-						</div>
-					</form>
-				</div>
+			<div className={classes.root}>
+				<Grid container justify="center" spacing={8}>
+					<Grid item xs={12} md={8} lg={6}>
+						<Card>
+							<CardContent>
+								<form onSubmit={this.submit()} autoComplete="on">
+									<legend>
+										<Typography variant="h2" gutterBottom>Login</Typography>
+									</legend>
+									<TextField
+										required
+										id="kentID"
+										label="Kent ID"
+										margin="normal"
+										onChange={this.handleChange("kentID")}
+										value={kentID.value || ''}
+										fullWidth
+										disabled={loading}
+									/>
+									<TextField
+										required
+										id="password"
+										label="Password"
+										margin="normal"
+										onChange={this.handleChange("password")}
+										value={password.value || ''}
+										fullWidth
+										type="password"
+										disabled={loading}
+									/>
+									<div className={classes.btnContainer}>
+										<Button
+											variant="contained"
+											color="primary"
+											type="submit"
+											disabled={loading}
+											className={classes.loginBtn}
+										>
+											Login
+										</Button>
+										<Button
+											variant="contained"
+											color="secondary"
+											type="submit"
+											component={Link}
+											to={loading ? "#" : "/register/"}
+											disabled={loading}
+											className={classes.registerBtn}
+										>
+											Register
+										</Button>
+									</div>
+									<br />
+									<div className={classes.center}>
+										{ loading && <CircularProgress /> }
+										{error && (
+											<Chip
+												label={error}
+												className={classes.error}
+												variant="outlined"
+											/>
+										)}
+									</div>
+								</form>
+							</CardContent>
+						</Card>
+					</Grid>
+				</Grid>
 			</div>
 		);
 	}
@@ -161,4 +193,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
 	mapStateToProps,
   mapDispatchToProps
-)(Login)
+)(withStyles(styles)(Login))
