@@ -46,7 +46,7 @@ class Module extends Component {
 			<div className={classes.root}>
 				<Grid container spacing={8}>
 					<Grid item xs={12}>
-						<Typography variant="h3">{moduleID} - {name}</Typography>
+						<Typography variant="h2">{moduleID} - {name}</Typography>
 						{ courseID && (
 							<Typography variant="body1">
 								Back to <Link to={"/course/" + courseID}>{
