@@ -44,7 +44,7 @@ class Lecture extends Component {
 			<div className={classes.root}>
 				<Grid container spacing={8}>
 					<Grid item xs={12}>
-						<Typography variant="h3">
+						<Typography variant="h2">
 							{lecture ? lecture.title : "Loading..."}
 						</Typography>
 						<Typography variant="body1">
