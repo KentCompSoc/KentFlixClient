@@ -1,14 +1,32 @@
+// React
 import React, { Component } from "react";
+// Router
 import { Link } from "react-router-dom";
-import "../../css/Video.css";
-//Redux
+// Redux
 import { connect } from "react-redux";
 import { getLectureById } from "../actions/lectures";
-
+// Material-UI
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+// Styles
+const styles = {
+	root: {
+		padding: 5,
+	},
+	center: {
+		textAlign: "center",
+	},
+	video: {
+		width: '100%',
+		maxHeight: '80vh'
+	}
+};
 /**
  * Displays a video.
  */
-class Video extends Component {
+class Lecture extends Component {
 	state = {
 		currentTime: 0,
 	}
@@ -18,71 +36,49 @@ class Video extends Component {
 		this.props.getLectureById({ token, lectureID: lecture.replace(/-/g, ".") });
 	}
 
-	/**
-	 * Updates the video play time.
-	 */
-	updateCurrentTime = () => event => {
-		const currentTime = document.getElementById("video").currentTime;
-		this.setState({ currentTime });
-	}
 	render() {
-		//const { year, course, videoURI } = this.props.match.params;
-		const { currentTime } = this.state;
-		const { lecture, error } = this.props;
+		const { lecture, error, classes } = this.props;
 		const id = this.props.match.params.lecture;
 
-
-		if (error && error.message) {
-			return (
-				<div className="row">
-					<div className="col-sm-12"><h2>Error</h2></div>
-					<div className="col-sm-12">
-						<h3><mark className="secondary">{error.message}</mark></h3>
-					</div>
-				</div>
-			)
-		}
-
 		return (
-			<div className="row">
-				<div className="col-sm-12">
-					<h3>
-						{lecture ? lecture.title : "Loading..."}
-						<small>
+			<div className={classes.root}>
+				<Grid container spacing={8}>
+					<Grid item xs={12}>
+						<Typography variant="h3">
+							{lecture ? lecture.title : "Loading..."}
+						</Typography>
+						<Typography variant="body1">
 							Back to <Link to={"/module/" + id.slice(0, id.indexOf('-'))}>
 								{id.slice(0, id.indexOf('-'))}
 							</Link>
-						</small>
-					</h3>
-				</div>
-				<div className="col-sm-12">
-					{lecture ? (
-						<React.Fragment>
+						</Typography>
+					</Grid>
+					{ error ? (
+						<Grid item xs={12}>
+							<Typography variant="p">Error: { error }</Typography>
+						</Grid>
+					) : lecture ? (
+						<Grid item xs={12}>
 							<video
-								className="video-video"
+								className={classes.video}
 								id="video"
-								onTimeUpdate={this.updateCurrentTime()}
 								controls
 							>
 								<source src={lecture.videoURL} type="video/mp4" />
 							</video>
-						
-							<progress
-								className="video-progress"
-								value={currentTime}
-								max={lecture.duration}
-							></progress>
-							<h4>
+							<Typography variant="h4">
 								{lecture.title} - {lecture.author}
-								<small>{new Date(lecture.date).toUTCString()}</small>
-							</h4>
-						</React.Fragment>
+							</Typography>
+							<Typography variant="body1">
+								{new Date(lecture.date).toUTCString()}
+							</Typography>
+						</Grid>
 					) : (
-						<div className="loading">
-							<div className="spinner primary"></div>
-						</div>
+						<Grid item xs={12} className={classes.center}>
+							<CircularProgress />
+						</Grid>
 					)}
-				</div>
+				</Grid>
 			</div>
 		)
 	}
@@ -100,7 +96,7 @@ function mapStateToProps ({ user, lectures, error }, ownProps) {
 	return {
 		token: user.token,
 		lecture,
-		error
+		error: error.message
 	}
 }
 
@@ -113,4 +109,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
 	mapStateToProps,
   mapDispatchToProps
-)(Video)
+)(withStyles(styles)(Lecture))

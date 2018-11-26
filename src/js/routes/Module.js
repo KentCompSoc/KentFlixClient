@@ -144,4 +144,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
 	mapStateToProps,
   mapDispatchToProps
-	)(withStyles(styles)(Module))
+)(withStyles(styles)(Module))
