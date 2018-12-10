@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import '../../css/Form.css';
 //Redux
 import { connect } from "react-redux";
 import { login } from "../actions/user";
@@ -96,7 +95,9 @@ class Login extends Component {
 	}
 
 	render() {
-		const { from } = this.props.location.state || { from: { pathname: "/dashboard/" } };
+		const { from } = this.props.location.state || { from: {
+			pathname: "/dashboard/"
+		}};
 		const { kentID, password, loading } = this.state;
 		const { token, error, classes } = this.props;
 
