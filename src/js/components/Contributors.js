@@ -1,11 +1,11 @@
 // React
-import React from 'react';
+import React, { PureComponent } from "react";
 // Material-UI
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import LinearProgress from "@material-ui/core/LinearProgress";
 // Styles
 const styles = {
 	center: {
@@ -16,55 +16,90 @@ const styles = {
 		display: "inline-block"
 	}
 };
-const Contributors = props => {
-	const { type, contributors, classes } = props;
-	if (contributors.loading) {
-		return (
-			<Grid item xs={6}>
-				<Typography variant="body1" color="inherit">{type} side:</Typography>
+
+class Contributors extends PureComponent {
+	state = {
+		loading: true,
+		error: false,
+		contributors: []
+	};
+
+	componentDidMount() {
+		const clientRef =
+			"https://api.github.com/repos/KentCompSoc/KentFlixClient/contributors?q=contributions&order=desc";
+		const serverRef =
+			"https://api.github.com/repos/KentCompSoc/KentFlixServer/contributors?q=contributions&order=desc";
+		// Fetch
+		Promise.all([fetch(clientRef), fetch(serverRef)])
+			.then(response => {
+				response.forEach(result => {
+					result.json().then(data => {
+						const newContributors = data.map(c => {
+							return {
+								id: c.id,
+								href: c.html_url,
+								name: c.login,
+								image: c.avatar_url,
+								contributions: c.contributions
+							};
+						});
+						this.setState(state => ({
+							contributors: [...state.contributors, ...newContributors]
+						}));
+					});
+				});
+				this.setState({ loading: false });
+			})
+			.catch(error => {
+				console.error(error);
+				this.setState({ error, loading: false });
+			});
+	}
+
+	render() {
+		const { loading, error, contributors } = this.state;
+		const { classes } = this.props;
+
+		if (loading) {
+			return (
 				<div className={classes.center}>
-					<CircularProgress />
+					<LinearProgress color="secondary" variant="query" />
 				</div>
-			</Grid>
-		)
-	}
+			);
+		}
 
-	if (contributors.error) {
-		return (
-			<Grid item xs={6}>
-				<Typography variant="body1" color="inherit">{type} side:</Typography>
+		if (error) {
+			return (
 				<Typography variant="body1" color="inherit">
-					Couldn't fetch {type.toLowerCase()} contributors
+					Couldn't fetch contributors
 				</Typography>
-			</Grid>
-		)
-	}
+			);
+		}
 
-	return (
-		<Grid item xs={6}>
+		return (
 			<Grid container spacing={8}>
-				<Grid item xs={12}>
-					<Typography variant="body1" color="inherit">{type} side:</Typography>
-				</Grid>
-				<Grid item xs={12}>
-					{ contributors.data.length > 0 ? (contributors.data.map(user => (
-							<Avatar
-								key={user.id}
-								component="a"
-								href={user.html_url}
-								alt={user.login + "avatar"}
-								src={user.avatar_url}
-								className={classes.avatar}
-							/>
-					))) : (
-						<Typography variant="body1" color="inherit">
-							{contributors.data.message}
-						</Typography>
-					)}
-				</Grid>
+				{console.log(
+					contributors.sort((a, b) => {
+						return a.contributions + b.contributions;
+					})
+				)}
+				{contributors
+					.sort((a, b) => {
+						return a.contributions + b.contributions;
+					})
+					.map(user => (
+						<Avatar
+							key={user.id}
+							component="a"
+							href={user.href}
+							alt={user.name + "avatar"}
+							src={user.image}
+							className={classes.avatar}
+						/>
+					))}
 			</Grid>
-		</Grid>
-	)
+		);
+	}
 }
 
 export default withStyles(styles)(Contributors);
